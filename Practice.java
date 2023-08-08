@@ -21,6 +21,29 @@ public class Practice{
 
     }
 
+    public static void allSubarr(int[] arr){
+        for(int i = 0; i < arr.length; i++){
+            for(int j = i; j < arr.length; j++){
+                System.out.print("{");
+                for(int k = i; k <= j; k++){
+                    if(j-i == 0){
+                        System.out.print(arr[k]);
+                    }
+                    else if(k == j){
+                        System.out.print(arr[k]);
+                    }
+                    else{
+                        System.out.print(arr[k] + ", ");
+                    }
+                    
+                    
+                }
+                System.out.print("}");
+            }
+            System.out.println();
+        }
+    }
+
     public static void BinSearchRec(int arr[], int val, int st, int end){
         if(st >= end){
             System.out.println("key not found");
@@ -42,12 +65,14 @@ public class Practice{
         
     }
     public static void main(String args[]){
-        Scanner sc = new Scanner(System.in);
+        /*Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
         int arr[] = new int[N];
         for(int i = 0; i < N; i++){
             arr[i] = sc.nextInt();
-        }
-        BinSearchRec(arr, 34, 0, N-1);
+        }*/
+        //BinSearchRec(arr, 34, 0, N-1);
+        int arr[] = {1,2,3,4,5};
+        allSubarr(arr);
     }
 }
