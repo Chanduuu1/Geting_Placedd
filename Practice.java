@@ -97,8 +97,58 @@ public class Practice{
             }
         }
         System.out.println("Max sum of subarray is "+ maxSum);
-
     }
+
+    public static void printArr(int[] arr){
+        // arr = height array
+        for(int i = 0; i < arr.length; i++){
+            System.out.print(arr[i]+" ");
+        }
+        System.out.println();
+    }
+
+    public static void trappingRain(int[] arr){
+        int N = arr.length;
+        int MLB[] = new int[N];
+        int MRB[] = new int[N];
+        // for getting maxLeftBound
+        int max = -1;
+        for(int i = 0; i < arr.length; i++){
+            for(int j = 0; j <= i; j++){
+                if(arr[j] > max){
+                    max = arr[j];
+                }
+            }
+            MLB[i] = max;
+            max = 0;
+        }
+
+        // for getting maxRightBound
+        max = -1;
+        for(int i = 0; i < arr.length; i++){
+            for(int j = arr.length - 1; j >= i; j--){
+                if(arr[j] > max){
+                    max = arr[j];
+                }
+            }
+            MRB[i] = max;
+            max = 0;
+        }
+        // Optimized way O(n) for calculating MLB and MRB written in rough book.
+        printArr(MRB);
+        printArr(MLB);        
+
+
+        // finding area
+        int area = 0,wl,bl,width = 1;
+        for(int i = 0; i < arr.length; i++){
+            wl = Math.min(MLB[i], MRB[i]);
+            area += (wl - arr[i]) * width;
+        }
+        System.out.println(area);
+    }
+
+
 
 
     public static void main(String args[]){
@@ -109,7 +159,10 @@ public class Practice{
             arr[i] = sc.nextInt();
         }
         BinSearchRec(arr, 34, 0, N-1);
-        */int arr[] = {1,3,6,-1,3};
-        maxSubarr(arr);
+        */
+        int arr[] = {4,2,0,6,3,2,5,7};
+        trappingRain(arr);
+
+
     }
 }
