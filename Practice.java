@@ -186,6 +186,24 @@ public class Practice{
 
     }
 
+    public static void stairCaseSearch(int[][] sortedMat,int key){
+        int i = 0;
+        int j = sortedMat[0].length - 1;
+        while(i < sortedMat.length && j < sortedMat[0].length){
+            if(sortedMat[i][j] > key){
+                j--;
+            }
+            else if(sortedMat[i][j] < key){
+                i++;
+            }
+            if(i < sortedMat.length && j < sortedMat[0].length && sortedMat[i][j] == key){
+                System.out.println("row ->" + i + " Column ->" + j);
+                return;
+            }
+            
+        }
+        System.out.println("key not present");
+    }
     public static void main(String args[]){
         /*
         Scanner sc = new Scanner(System.in);
@@ -198,9 +216,9 @@ public class Practice{
         int arr[] = {4,2,0,6,3,2,5,7};
         trappingRain(arr);
         */
-        int[][] mat = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+        int[][] mat = {{10,20,30,40},{15,25,35,45},{27,29,27,48},{32,33,39,50}};
         printArr2D(mat);
-        spiralArr(mat);
+        stairCaseSearch(mat,36);
 
     }
 }
