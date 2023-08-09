@@ -20,7 +20,6 @@ public class Practice{
 
 
     }
-
     public static void allSubarr(int[] arr){
         for(int i = 0; i < arr.length; i++){
             for(int j = i; j < arr.length; j++){
@@ -41,7 +40,6 @@ public class Practice{
             System.out.println();
         }
     }
-
     public static void BinSearchRec(int arr[], int val, int st, int end){
         if(st >= end){
             System.out.println("key not found");
@@ -60,7 +58,6 @@ public class Practice{
             return;
         }  
     }
-
     public static void maxSubarr(int[] arr){
         // brute force, subarrays saare sum find and return max
         // prefix sum array
@@ -98,7 +95,6 @@ public class Practice{
         }
         System.out.println("Max sum of subarray is "+ maxSum);
     }
-
     public static void printArr(int[] arr){
         // arr = height array
         for(int i = 0; i < arr.length; i++){
@@ -106,7 +102,6 @@ public class Practice{
         }
         System.out.println();
     }
-
     public static void trappingRain(int[] arr){
         int N = arr.length;
         int MLB[] = new int[N];
@@ -147,7 +142,6 @@ public class Practice{
         }
         System.out.println(area);
     }
-
     public static void spiralArr(int[][] matrix){
         int sc = 0,sr = 0, ec = matrix[0].length-1, er = matrix.length-1;
         while(sc <= ec && sr <= er){
@@ -175,7 +169,6 @@ public class Practice{
         System.out.print(" END ");
 
     }
-
     public static void printArr2D(int[][] mat){
         for(int i = 0; i< mat.length; i++){
             for(int j = 0; j < mat[0].length; j++){
@@ -185,7 +178,6 @@ public class Practice{
         }
 
     }
-
     public static void stairCaseSearch(int[][] sortedMat,int key){
         int i = 0;
         int j = sortedMat[0].length - 1;
@@ -204,6 +196,37 @@ public class Practice{
         }
         System.out.println("key not present");
     }
+    public static void strCompress(String s){
+        int count = 1;
+        String newStr = " ";
+        int i = 0;
+        int j = 1;
+        while(j <= s.length()){
+            if(j == s.length()){
+                if(count > 1){
+                    newStr += s.charAt(i) + Integer.toString(count);
+                    break;
+                } else if(count == 1){
+                    newStr += s.charAt(i);
+                    break;
+                }    
+            }
+            if(s.charAt(i) == s.charAt(j)){
+                j++;
+                count++;
+            } else{
+                if(count == 1){
+                    newStr += s.charAt(i);
+                } else if(count > 1){
+                    newStr += s.charAt(i) + Integer.toString(count);
+                }
+                i = j;
+                j++;
+                count = 1;
+            }
+        }
+        System.out.println(newStr);
+    }
     public static void main(String args[]){
         /*
         Scanner sc = new Scanner(System.in);
@@ -215,10 +238,12 @@ public class Practice{
         BinSearchRec(arr, 34, 0, N-1);
         int arr[] = {4,2,0,6,3,2,5,7};
         trappingRain(arr);
-        */
         int[][] mat = {{10,20,30,40},{15,25,35,45},{27,29,27,48},{32,33,39,50}};
         printArr2D(mat);
         stairCaseSearch(mat,36);
+        */
+
+       strCompress("aaabbcccddefffffgh");
 
     }
 }
