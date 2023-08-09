@@ -148,21 +148,59 @@ public class Practice{
         System.out.println(area);
     }
 
+    public static void spiralArr(int[][] matrix){
+        int sc = 0,sr = 0, ec = matrix[0].length-1, er = matrix.length-1;
+        while(sc <= ec && sr <= er){
+            //top
+            for(int i = sc; i <= ec; i++){
+                System.out.print(matrix[sr][i] + " -> ");
+            }
+            //right
+            for(int i = sr + 1; i <= er; i++){
+                System.out.print(matrix[i][ec] + " -> ");
+            }
+            //bottom
+            for(int i = ec - 1; i >= sr; i--){
+                System.out.print(matrix[er][i] + " -> ");
+            }
+            //left
+            for(int i = er - 1; i >= sr + 1; i--){
+                System.out.print(matrix[i][sc] + " -> ");
+            }
+            sc++;
+            sr++;
+            ec--;
+            er--;
+        }
+        System.out.print(" END ");
 
+    }
 
+    public static void printArr2D(int[][] mat){
+        for(int i = 0; i< mat.length; i++){
+            for(int j = 0; j < mat[0].length; j++){
+                System.out.print(mat[i][j] + " ");
+            }
+            System.out.println();
+        }
+
+    }
 
     public static void main(String args[]){
-        /*Scanner sc = new Scanner(System.in);
+        /*
+        Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
         int arr[] = new int[N];
         for(int i = 0; i < N; i++){
             arr[i] = sc.nextInt();
         }
         BinSearchRec(arr, 34, 0, N-1);
-        */
         int arr[] = {4,2,0,6,3,2,5,7};
         trappingRain(arr);
-
+        */
+        int[][] mat = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16}};
+        printArr2D(mat);
+        spiralArr(mat);
 
     }
 }
