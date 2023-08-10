@@ -227,6 +227,40 @@ public class Practice{
         }
         System.out.println(newStr);
     }
+    public static int removeElement(int[] nums, int val) {
+        int count = 0;
+        int i = 0;
+        while(i < nums.length){
+            if(nums[i] == val){
+                count++;
+                for(int j = i; j < nums.length-1; j++){
+                    nums[j] = nums[j+1];
+                }
+                nums[nums.length-count] = -1;
+            }
+            else{
+                i++;
+            }
+        }
+        return count;
+    }
+    public static int removeDuplicates(int[] nums) {
+        int n=nums.length;
+        if(n==0){
+            return 0;
+        }
+        else{
+            int a=0;
+            for(int i=0;i<n;i++){
+                if(nums[a]!=nums[i]){
+                    a++;
+                    nums[a]=nums[i];
+                }
+            }
+            return a+1;
+        } 
+    }
+
     public static void main(String args[]){
         /*
         Scanner sc = new Scanner(System.in);
@@ -241,9 +275,12 @@ public class Practice{
         int[][] mat = {{10,20,30,40},{15,25,35,45},{27,29,27,48},{32,33,39,50}};
         printArr2D(mat);
         stairCaseSearch(mat,36);
-        */
-
        strCompress("aaabbcccddefffffgh");
+       */
+        int arr[] = {0,0,1,1,1,2,2,3,3,4};
+        System.out.println(removeDuplicates(arr));
+        printArr(arr);
+
 
     }
 }
