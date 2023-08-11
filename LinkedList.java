@@ -75,6 +75,32 @@ class LinkedListCreator{
         }
     }
 
+    public void removeFirst(){
+        if(head == null){
+            // do nothing
+            System.out.println("The LL is already empty");
+        }
+        else{
+            head = head.next;
+            return;
+        }
+    }
+
+    public void removeLast(){
+        Node temp;
+        if(head == null){
+            System.out.println("the ll is empty already");
+            
+        } else{
+            temp = head;
+        while(temp.next.next != null){
+            temp = temp.next;
+        }
+        // temp => penultimate node
+        tail = temp;
+        temp.next = null;
+        }
+    }
 }
 
 public class LinkedList{
@@ -96,5 +122,11 @@ public class LinkedList{
         ll1.printLL();
         System.out.println(ll1.sizeOfLL);
         System.out.println(ll2.sizeOfLL);
+        ll1.printLL();
+        ll1.removeFirst();
+        ll1.printLL();
+        ll2.removeLast();
+        ll1.printLL();
+
     }
 }
