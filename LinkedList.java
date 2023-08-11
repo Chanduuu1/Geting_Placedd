@@ -1,5 +1,5 @@
-public class LinkedList{
-    class Node{
+class LinkedListCreator{
+    public class Node{
         int data;
         Node next; // this will be a reference variable which right now is not pointing anywhere
 
@@ -47,11 +47,15 @@ public class LinkedList{
         }
     }
 
+}
+
+public class LinkedList{
     public static void main(String[] args){
-        LinkedList ll1 = new LinkedList();
-        //ll1.printLL();
+        LinkedListCreator ll1 = new LinkedListCreator();
+        ll1.printLL();
         System.out.println("head of LL1 is" + ll1.head);
         ll1.addFirst(4);
+        ll1.printLL();
         System.out.println("head of LL1 is" + ll1.head +" and the value of head is " + ll1.head.data);
         ll1.addFirst(3);
         System.out.println("head of LL1 is" + ll1.head);
@@ -63,7 +67,7 @@ public class LinkedList{
         ll1.addLast(5);
         System.out.println("head of LL1 is" + ll1.head);
 
-        LinkedList ll2 = new LinkedList();
+        LinkedListCreator ll2 = new LinkedListCreator();
         ll2.addLast(10);
         System.out.println("tail of LL2 is" + ll2.tail);
         ll2.addLast(9);
