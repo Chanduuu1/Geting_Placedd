@@ -101,7 +101,43 @@ class LinkedListCreator{
         temp.next = null;
         }
     }
+
+    public int iterSearch(int val){
+        Node temp = head;
+        int idx = 0;
+        while(temp != null){
+            if(temp.data == val){
+                return idx;
+            }
+            else{
+                temp = temp.next;
+                idx++;
+            }
+        } 
+        return -1;  
+
+    }
+
+    public int helperForRecSrch(Node head , int val){
+        int idx;
+        if(head == null){
+            return -1;
+        }
+        if(head.data == val){
+            idx = 0;
+            return idx;
+        }
+        idx = helperForRecSrch(head.next, val);
+        idx++;
+        return idx;
+    }
+    public int recSearch(int val){
+        return helperForRecSrch(this.head,val);
+    }
 }
+
+    
+
 
 public class LinkedList{
     public static void main(String[] args){
@@ -113,20 +149,12 @@ public class LinkedList{
         ll1.addLast(5);
         ll1.addLast(6);
         ll1.addLast(7);
-        ll1.printLL();
         ll1.addAtIdx(4,3);
-        System.out.println("Tail of ll1 is before appending at last "+ll1.tail);
         ll1.addAtIdx(8,7);
-        System.out.println("Tail of ll1 is after appending at last "+ll1.tail);
-        // hence it is important to update the tail variable in case of add at index function, so better when you are appending at last index make a call to addLast from the add at index function.It will take care of tail function.
         ll1.printLL();
-        System.out.println(ll1.sizeOfLL);
-        System.out.println(ll2.sizeOfLL);
-        ll1.printLL();
-        ll1.removeFirst();
-        ll1.printLL();
-        ll2.removeLast();
-        ll1.printLL();
+        System.out.println("The inddex of the value is at "+ll1.recSearch(5));
+        
+        
 
     }
 }
