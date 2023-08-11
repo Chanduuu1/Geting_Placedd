@@ -11,15 +11,17 @@ class LinkedListCreator{
     }
     public Node head; // head is a reference variable with initial null value with data type as Node.
     public Node tail; // tail is a reference variable with initial null value with data type as Node.
-    
+    public int sizeOfLL = 0;
     public void addFirst(int data){
         Node newNode = new Node(data);
         if(head == null){
             head = tail = newNode;
+            sizeOfLL++;
             return;
         } else{
             newNode.next = head;
             head = newNode;
+            sizeOfLL++;
             return;
         }  
     }
@@ -39,11 +41,37 @@ class LinkedListCreator{
         Node newNode = new Node(data);
         if(head == null){
             head = tail = newNode;
+            sizeOfLL++;
             return;
         } else{
             tail.next = newNode;
             tail = newNode;
+            sizeOfLL++;
             return; 
+        }
+    }
+
+    public void addAtIdx(int data, int idx){
+        if(head == null){
+            addFirst(data);
+        } 
+        else {
+            int idxAt = 0;
+            Node newNode = new Node(data);
+            Node temp = head;
+            while(idxAt < idx-1){
+                temp = temp.next;
+                idxAt++;
+            }
+            if(idxAt == sizeOfLL - 1){
+                addLast(data);
+            }
+            else{
+                //temp => idx - 1
+                newNode.next = temp.next;
+                temp.next = newNode;
+                sizeOfLL++;
+            }
         }
     }
 
@@ -52,33 +80,21 @@ class LinkedListCreator{
 public class LinkedList{
     public static void main(String[] args){
         LinkedListCreator ll1 = new LinkedListCreator();
-        ll1.printLL();
-        System.out.println("head of LL1 is" + ll1.head);
-        ll1.addFirst(4);
-        ll1.printLL();
-        System.out.println("head of LL1 is" + ll1.head +" and the value of head is " + ll1.head.data);
-        ll1.addFirst(3);
-        System.out.println("head of LL1 is" + ll1.head);
-        ll1.addFirst(2);
-        System.out.println("head of LL1 is" + ll1.head);
-        ll1.addFirst(1);
-        System.out.println("head of LL1 is" + ll1.head);
-        //ll1.printLL();
-        ll1.addLast(5);
-        System.out.println("head of LL1 is" + ll1.head);
-
         LinkedListCreator ll2 = new LinkedListCreator();
-        ll2.addLast(10);
-        System.out.println("tail of LL2 is" + ll2.tail);
-        ll2.addLast(9);
-        System.out.println("tail of LL2 is" + ll2.tail);
-        ll2.addLast(8);
-        System.out.println("tail of LL2 is" + ll2.tail);
-        ll2.addLast(7);
-        System.out.println("tail of LL2 is" + ll2.tail);
-        ll2.addLast(6);
-        System.out.println("tail of LL2 is" + ll2.tail);
-        ll2.addLast(5);
-        System.out.println("tail of LL2 is" + ll2.tail);
+        ll1.addFirst(1);
+        ll1.addLast(2);
+        ll1.addLast(3);
+        ll1.addLast(5);
+        ll1.addLast(6);
+        ll1.addLast(7);
+        ll1.printLL();
+        ll1.addAtIdx(4,3);
+        System.out.println("Tail of ll1 is before appending at last "+ll1.tail);
+        ll1.addAtIdx(8,7);
+        System.out.println("Tail of ll1 is after appending at last "+ll1.tail);
+        // hence it is important to update the tail variable in case of add at index function, so better when you are appending at last index make a call to addLast from the add at index function.It will take care of tail function.
+        ll1.printLL();
+        System.out.println(ll1.sizeOfLL);
+        System.out.println(ll2.sizeOfLL);
     }
 }
