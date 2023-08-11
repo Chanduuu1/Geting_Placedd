@@ -118,21 +118,34 @@ class LinkedListCreator{
 
     }
 
-    public int helperForRecSrch(Node head , int val){
+    public int helperForRecSrch(Node tempHead , int val){
         int idx;
-        if(head == null){
+        if(tempHead == null){
             return -1;
         }
-        if(head.data == val){
+        if(tempHead.data == val){
             idx = 0;
             return idx;
         }
-        idx = helperForRecSrch(head.next, val);
+        idx = helperForRecSrch(tempHead.next, val);
         idx++;
         return idx;
     }
     public int recSearch(int val){
         return helperForRecSrch(this.head,val);
+    }
+
+    public void reverseLL(){
+        Node prev = null;
+        Node curr = this.head;
+        Node next;  
+        while(curr != null){
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+        head = prev;
     }
 }
 
@@ -152,7 +165,13 @@ public class LinkedList{
         ll1.addAtIdx(4,3);
         ll1.addAtIdx(8,7);
         ll1.printLL();
+        System.out.println("head "+ll1.head);
         System.out.println("The inddex of the value is at "+ll1.recSearch(5));
+        System.out.println("head "+ll1.head);
+        System.out.println();
+        
+        ll1.reverseLL();
+        ll1.printLL();
         
         
 
