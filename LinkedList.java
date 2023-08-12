@@ -242,7 +242,7 @@ class LinkedListCreator{
             return;
         }    
         // step2 - find the loop start node;
-        while(fast != slow){
+        while(fast != slow ){ // fast != head ek corner case ho jaega when the cycle is proper circular head is loop start so improvise, usually nahi puchte yeh
             prev= fast;
             fast = fast.next; //+1 ka incriment
             slow = slow.next; //+1 ka incri
@@ -250,34 +250,82 @@ class LinkedListCreator{
         // step3 - set its prev's next to null; if fast == slow reached, it means that loop starting reached so prev.next = null;
         prev.next = null;
     }
-}
+
+    private Node findMidVariation(Node head){
+            Node slow = head;
+            Node fast = head.next;
+            while(fast != null && fast.next != null){
+                slow = slow.next; //+1
+                fast = fast.next.next; //+2
+            }
+            return slow; // slow is midNode
+    }
+    public Node mergerLL(Node head1, Node head2){
+        Node mergedLL = new Node(-1);
+        Node temp = mergedLL;
+        while(head1 != null && head2 != null){
+            if(head1.data <= head2.data){
+                temp.next = head1;
+                head1 = head1.next;
+                temp = temp.next;
+            }
+            else if(head1.data >= head2.data){
+                temp.next = head2;
+                head2 = head2.next;
+                temp = temp.next;
+            }
+        }
+        while(head1 != null){
+            temp.next = head1;
+            head1 = head1.next;
+            temp = temp.next;   
+        }
+
+        while(head2 != null){
+            temp.next = head2;
+            head2 = head2.next;
+            temp = temp.next;   
+        }
+
+        return mergedLL.next;
+        
+    }
+    public Node mergeSortLL(Node headOfLLtoSort){
+        if(headOfLLtoSort == null || headOfLLtoSort.next == null){
+            return headOfLLtoSort;
+        }
+
+        // step1 finding mid
+        Node mid = findMidVariation(headOfLLtoSort);
+        // step2 makking left and right head and further diveide them
+        Node rightHead = mid.next;
+        mid.next = null;
+        Node newLeft = mergeSortLL(headOfLLtoSort);
+        Node newRight = mergeSortLL(rightHead);
+        
+        //step3 merge them
+        return mergerLL(newLeft,newRight);
+
+    }
 
     
+    
+}
+
 
 
 public class LinkedList{
     public static void main(String[] args){
         LinkedListCreator ll1 = new LinkedListCreator();
-        LinkedListCreator ll2 = new LinkedListCreator();
-        ll1.head = ll1.new Node(1);
-        ll1.head.next = ll1.new Node(2);
-        ll1.head.next.next = ll1.new Node(3);
+        ll1.addFirst(19);
+        ll1.addFirst(20);
+        ll1.addFirst(15);
+        ll1.addFirst(35);
+        ll1.addFirst(22);
+        ll1.addFirst(21);
         ll1.printLL();
-        ll1.head.next.next.next = ll1.new Node(4);
-        ll1.head.next.next.next.next = ll1.new Node(5);
-        ll1.head.next.next.next.next.next = ll1.head.next.next;
-        System.out.println(ll1.isCyclic());
-        ll1.removeCycle();
+        ll1.head = ll1.mergeSortLL(ll1.head);
         ll1.printLL();
-        // mast cycle nikal diya
-
-
-        ll2.addFirst(1);
-        ll2.addLast(2);
-        ll2.addLast(3);
-        ll2.addLast(4);
-        ll2.removeCycle();
-        // cycle tha hi nahi toh fnx ne bata dia tnsn not.
 
         
         
