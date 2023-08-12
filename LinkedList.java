@@ -208,6 +208,19 @@ class LinkedListCreator{
         return true;
 
     }
+
+    public boolean isCyclic(){
+        Node slow = this.head;
+        Node fast = this.head;
+        while(fast != null && fast.next != null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow){ // cycle exsists
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
     
@@ -216,37 +229,16 @@ class LinkedListCreator{
 public class LinkedList{
     public static void main(String[] args){
         LinkedListCreator ll1 = new LinkedListCreator();
-        LinkedListCreator ll2 = new LinkedListCreator();
-        ll1.addFirst(1);
-        ll1.addLast(2);
-        ll1.addLast(3);
-        ll1.addLast(5);
-        ll1.addLast(6);
-        ll1.addLast(7);
-        ll1.addAtIdx(4,3);
-        ll1.addAtIdx(8,7);
+        ll1.head = ll1.new Node(1);
+        ll1.head.next = ll1.new Node(2);
+        ll1.head.next.next = ll1.new Node(3);
         ll1.printLL();
-        System.out.println("head "+ll1.head);
-        System.out.println("The inddex of the value is at "+ll1.recSearch(5));
-        System.out.println("head "+ll1.head);
-        System.out.println();
-        
-        ll1.reverseLL();
-        ll1.printLL();
-        ll1.removeNthFromEnd(3);
-        ll1.reverseLL();
-        ll1.printLL();
-        ll2.addFirst(1);
-        ll2.addFirst(2);
-        ll2.addFirst(2);
-        ll2.addFirst(3);
-        ll2.addFirst(2);
-        ll2.addFirst(2);
-        ll2.addFirst(1);
-        System.out.println(ll2.palindromeLlOrNot());
-        
-        // great success!
-        
+        ll1.head.next.next.next = ll1.new Node(4);
+        ll1.head.next.next.next.next = ll1.new Node(5);
+        ll1.head.next.next.next.next.next = ll1.head.next.next;
+        System.out.println(ll1.isCyclic());
 
+        //Mojor concept reveled!!! how to manually create LL without funcitons. check for ll1.new Node(); wala stmt!
+        
     }
 }
