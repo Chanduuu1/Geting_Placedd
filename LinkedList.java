@@ -221,6 +221,35 @@ class LinkedListCreator{
         }
         return false;
     }
+
+    public void removeCycle(){
+        Node slow = this.head;
+        Node fast = this.head;
+        Node prev = null;
+        boolean cycle = false;
+        // step1 - detect cycle;
+        while(fast != null && fast.next != null && cycle == false){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow){ // cycle exsists
+                cycle = true;
+                slow = this.head;
+            }
+        }
+        if(cycle == false){
+            System.out.println("No cycle bro!");
+            
+            return;
+        }    
+        // step2 - find the loop start node;
+        while(fast != slow){
+            prev= fast;
+            fast = fast.next; //+1 ka incriment
+            slow = slow.next; //+1 ka incri
+        }
+        // step3 - set its prev's next to null; if fast == slow reached, it means that loop starting reached so prev.next = null;
+        prev.next = null;
+    }
 }
 
     
@@ -229,6 +258,7 @@ class LinkedListCreator{
 public class LinkedList{
     public static void main(String[] args){
         LinkedListCreator ll1 = new LinkedListCreator();
+        LinkedListCreator ll2 = new LinkedListCreator();
         ll1.head = ll1.new Node(1);
         ll1.head.next = ll1.new Node(2);
         ll1.head.next.next = ll1.new Node(3);
@@ -237,8 +267,19 @@ public class LinkedList{
         ll1.head.next.next.next.next = ll1.new Node(5);
         ll1.head.next.next.next.next.next = ll1.head.next.next;
         System.out.println(ll1.isCyclic());
+        ll1.removeCycle();
+        ll1.printLL();
+        // mast cycle nikal diya
 
-        //Mojor concept reveled!!! how to manually create LL without funcitons. check for ll1.new Node(); wala stmt!
+
+        ll2.addFirst(1);
+        ll2.addLast(2);
+        ll2.addLast(3);
+        ll2.addLast(4);
+        ll2.removeCycle();
+        // cycle tha hi nahi toh fnx ne bata dia tnsn not.
+
+        
         
     }
 }
