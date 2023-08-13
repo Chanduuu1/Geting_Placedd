@@ -308,7 +308,47 @@ class LinkedListCreator{
 
     }
 
-    
+
+    public Node getMid(){
+        Node slow = this.head;
+        Node fast = this.head.next;
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return slow;
+    }
+    public Node zigZagLL(){
+        // step1 find mid
+        Node mid = getMid();
+        // step2 divide the ll from mid and reverse the right side
+        Node prev = null;
+        Node curr = mid.next;
+        mid.next = null;
+        Node Next;
+        while(curr != null){
+            Next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = Next;
+        }
+        Node leftHead = this.head;
+        Node rightHead = prev;
+
+        // step3 merge in zig zag fashion
+        Node newRight;
+        Node newLeft;
+        while(leftHead != null && rightHead != null){
+            newLeft = leftHead.next;
+            leftHead.next = rightHead;
+            newRight = rightHead.next;
+            rightHead.next = newLeft;
+
+            rightHead = newRight;
+            leftHead = newLeft;
+        }
+        return head;
+    }
     
 }
 
@@ -317,17 +357,16 @@ class LinkedListCreator{
 public class LinkedList{
     public static void main(String[] args){
         LinkedListCreator ll1 = new LinkedListCreator();
-        ll1.addFirst(19);
-        ll1.addFirst(20);
-        ll1.addFirst(15);
-        ll1.addFirst(35);
-        ll1.addFirst(22);
-        ll1.addFirst(21);
+        ll1.addFirst(1);
+        ll1.addLast(2);
+        ll1.addLast(3);
+        ll1.addLast(4);
+        ll1.addLast(5);
+        ll1.addLast(6);
         ll1.printLL();
-        ll1.head = ll1.mergeSortLL(ll1.head);
+        ll1.head = ll1.zigZagLL();
         ll1.printLL();
-
         
         
     }
-}
+}   
