@@ -26,6 +26,7 @@ class LinkedListCreator{
         }  
     }
 
+
     public void printLL(){
         Node temp;
         temp = head;
@@ -36,6 +37,7 @@ class LinkedListCreator{
         System.out.print("null");
         System.out.println();
     }
+
 
     public void addLast(int data){
         Node newNode = new Node(data);
@@ -50,6 +52,7 @@ class LinkedListCreator{
             return; 
         }
     }
+
 
     public void addAtIdx(int data, int idx){
         if(head == null){
@@ -75,6 +78,7 @@ class LinkedListCreator{
         }
     }
 
+
     public void removeFirst(){
         if(head == null){
             // do nothing
@@ -85,6 +89,7 @@ class LinkedListCreator{
             return;
         }
     }
+
 
     public void removeLast(){
         Node temp;
@@ -102,6 +107,7 @@ class LinkedListCreator{
         }
     }
 
+
     public int iterSearch(int val){
         Node temp = head;
         int idx = 0;
@@ -117,6 +123,7 @@ class LinkedListCreator{
         return -1;  
 
     }
+
 
     public int helperForRecSrch(Node tempHead , int val){
         int idx;
@@ -135,6 +142,7 @@ class LinkedListCreator{
         return helperForRecSrch(this.head,val);
     }
 
+
     public void reverseLL(){
         Node prev = null;
         Node curr = this.head;
@@ -147,6 +155,7 @@ class LinkedListCreator{
         }
         head = prev;
     }
+
 
     public void removeNthFromEnd(int idx){
         // nth index from end is sz - n + 1 from begining;
@@ -167,6 +176,7 @@ class LinkedListCreator{
         temp.next = temp.next.next;
         return;
     }
+
 
     public Node findMid(){
         Node slow = this.head;
@@ -209,6 +219,7 @@ class LinkedListCreator{
 
     }
 
+
     public boolean isCyclic(){
         Node slow = this.head;
         Node fast = this.head;
@@ -221,6 +232,7 @@ class LinkedListCreator{
         }
         return false;
     }
+
 
     public void removeCycle(){
         Node slow = this.head;
@@ -250,6 +262,7 @@ class LinkedListCreator{
         // step3 - set its prev's next to null; if fast == slow reached, it means that loop starting reached so prev.next = null;
         prev.next = null;
     }
+
 
     private Node findMidVariation(Node head){
             Node slow = head;
@@ -352,21 +365,88 @@ class LinkedListCreator{
     
 }
 
+class DoublyLLCreator{
+    public class Node{
+        int data;
+        Node next;
+        Node prev;
+        public Node(int data){
+            this.data = data;
+            this.next = null;
+            this.prev = null;
+        } 
+    }
+    public Node head;
+    public Node tail;
 
+
+    public void addFirst(int data){
+        Node newNode = new Node(data);
+        if(head == null){
+            head = tail = newNode;
+            return;
+        }
+        
+        newNode.next = head;
+        head.prev = newNode;
+        head = newNode;
+        
+    }
+
+
+    public void printDLL(){
+        Node temp = head;
+        while(temp != null){
+            System.out.print(temp.data + "<->");
+            temp = temp.next;
+        }
+        System.out.println("null");
+           
+    }
+
+
+    public void removeLast(){
+        if(head == null){
+            return;
+        }
+        tail.prev.next = null;
+        tail = tail.prev;
+    }
+
+
+    public void removeFirst(){
+        if(head == null){
+            return;
+        }
+        head = head.next;
+        head.prev = null;
+    }
+
+
+    public void reverseDll(){
+        Node prev = null;
+        Node curr = head;
+        Node next;
+        while(curr != null){
+            next = curr.next;
+            curr.next = prev;
+            curr.prev = next;
+            prev = curr;
+            curr = next;            
+        }
+        head = prev;
+    }
+}
 
 public class LinkedList{
     public static void main(String[] args){
-        LinkedListCreator ll1 = new LinkedListCreator();
-        ll1.addFirst(1);
-        ll1.addLast(2);
-        ll1.addLast(3);
-        ll1.addLast(4);
-        ll1.addLast(5);
-        ll1.addLast(6);
-        ll1.printLL();
-        ll1.head = ll1.zigZagLL();
-        ll1.printLL();
-        
+        DoublyLLCreator dll1 = new DoublyLLCreator();
+        dll1.addFirst(3);
+        dll1.addFirst(2);
+        dll1.addFirst(1);
+        dll1.printDLL();
+        dll1.reverseDll();
+        dll1.printDLL();
         
     }
 }   
