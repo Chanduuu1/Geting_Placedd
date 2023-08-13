@@ -23,20 +23,68 @@ class stackUsingAL{
     public int peek(){
         if(isEmpty()){
             return -1;
-        }
+        }   
         return list.get(list.size() - 1);
+    }
+}
+
+class stackUsingLL{
+    public class Node{
+        int data;
+        Node next;
+        public Node(int data){
+            this.data = data;
+            this.next = null;
+        }
+    }
+    public Node head;
+    public Node tail;
+
+    //push operation using add first
+    public boolean isEmpty(){
+        return head == null;
+    }
+    public void push(int data){
+        Node newNode = new Node(data);
+        if(head == null){
+            head = tail = newNode;
+            return;
+        }
+        newNode.next = head;
+        head = newNode;
+        // right now head is pointing at the top of the stack
+    }
+
+    public int pop(){
+        if(head == null){
+            System.out.println("the stack is empty");
+            return -1;
+        }
+        int val = head.data;
+        head = head.next;
+        return val;
+    }
+
+    public int peek(){
+        if(head == null){
+            System.out.println("the stack is empty");
+            return -1;
+        }
+        return head.data;
     }
 }
 public class Stack{
     public static void main(String[] args){
         stackUsingAL s1 = new stackUsingAL();
-        s1.push(1);
-        s1.push(2);
-        s1.push(3);
-        s1.push(4);
-        while(!s1.isEmpty()){
-            System.out.println(s1.peek());
-            s1.pop();
+        stackUsingLL s2 = new stackUsingLL();
+        s2.push(1);
+        s2.push(2);
+        s2.push(3);
+        s2.push(4);
+        s2.pop();
+        while(!s2.isEmpty()){
+            System.out.println(s2.peek());
+            s2.pop();
             
         }
 
