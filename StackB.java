@@ -102,10 +102,33 @@ public class StackB{
 
     }
 
+    public static void reverseStack(Stack<Integer> s){
+        // base case
+        if(s.isEmpty()){
+            return;
+        }
+        //main step
+        int val = s.pop();
+        reverseStack(s);
+        pushAtBottom(s,val);
+    }
+
+    public static void showStack(Stack<Integer> s){
+        while(!s.isEmpty()){
+            System.out.println(s.peek());
+            s.pop();    
+        }
+    }
+
     public static void main(String[] args){
-        String str = "abcd";
-        System.out.println(str);
-        System.out.println(printReverseString(str));
+        Stack<Integer> s = new Stack<>();
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        reverseStack(s);
+        showStack(s);
+        
+
         
     }
 }
