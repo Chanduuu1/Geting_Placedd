@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.*;
 
 class stackUsingAL{
     ArrayList<Integer> list= new ArrayList<>();
@@ -73,20 +73,26 @@ class stackUsingLL{
         return head.data;
     }
 }
-public class Stack{
-    public static void main(String[] args){
-        stackUsingAL s1 = new stackUsingAL();
-        stackUsingLL s2 = new stackUsingLL();
-        s2.push(1);
-        s2.push(2);
-        s2.push(3);
-        s2.push(4);
-        s2.pop();
-        while(!s2.isEmpty()){
-            System.out.println(s2.peek());
-            s2.pop();
-            
-        }
 
+public class StackB{
+     public static void pushAtBottom(Stack<Integer> s, int data){
+        if(s.isEmpty()){
+            s.push(data);
+            return;
+        }
+        int val = s.pop();
+        pushAtBottom(s,data);
+        s.push(val);
+    }
+    
+    public static void main(String[] args){
+        Stack<Integer> s = new Stack<>();
+        s.push(1);
+        s.push(2);
+        s.push(3);
+        pushAtBottom(s,4);
+        while(!s.isEmpty()){
+            System.out.println(s.pop());
+        }
     }
 }
