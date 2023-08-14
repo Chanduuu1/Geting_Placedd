@@ -120,11 +120,14 @@ public class StackB{
         }
     }
 
+
     public static void printarr(int[] arr){
         for(int i = 0; i < arr.length; i++){
             System.out.print(arr[i] + " ");
         }
     }
+
+
     public static void stockSpanProb(int[] price){
         Stack<Integer> s = new Stack<>();
         int span[] = new int[price.length];
@@ -153,9 +156,91 @@ public class StackB{
         
     }
 
+
+    public static boolean open(char ch){
+        switch(ch){
+            case '(' : return true;
+            case '[' : return true;
+            case '{' : return true;
+            default : return false;        
+        }
+    }
+    public static boolean close(char ch){
+        switch(ch){
+            case ')' : return true;
+            case ']' : return true;
+            case '}' : return true;
+            default : return false;        
+        }
+    }
+    public static char conjugateOf(char ch){
+        switch(ch){
+            case '(' : return ')';
+            case '[' : return ']';
+            case '{' : return '}';
+            default : return '-';        
+        }
+    }
+    public static boolean validParentheses(String str){
+        Stack<Character> s = new Stack<>();
+        for(int i = 0; i < str.length(); i++){
+            char ch = str.charAt(i);
+            if(s.isEmpty() && close(ch)){
+                return false;
+            }
+            if(open(ch)){
+                s.push(ch);
+            }
+            if(close(ch)){
+                if( ch == conjugateOf(s.peek()) ) {
+                    s.pop();
+                }
+                else{
+                    return false;
+                }
+            }
+        }
+        if(s.isEmpty()){
+            return true;    
+        }
+        return false;
+    }
+
+
+    public static boolean dupliParentheses(String str){
+        Stack<Character> s = new Stack<>();
+        for(int i = 0; i < str.length(); i++){
+            char ch = str.charAt(i);
+            // check if it is a closing char
+            if(ch == ')'){
+                int count = 0;
+                while(s.peek() != '('){
+                    count++;
+                    s.pop();
+                }
+                if(count < 1){
+                    return true;
+                }
+                s.pop();
+            }
+            else{
+                s.push(ch);
+            }
+        }
+        return false;
+    }
+
+
+    public static int maxAreaHistogram(int[] arr){
+        
+    }
+
     public static void main(String[] args){
-        int[] price = {100,80,60,70,60,85,100};
-        stockSpanProb(price);
+        System.out.println(dupliParentheses("(((c+d)+(a+b))+(e))"));
+        
+       
+        
+        
          
     }
 }
