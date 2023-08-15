@@ -231,16 +231,128 @@ public class StackB{
     }
 
 
+    public static void nextGreaterEle(int[] arr){
+        Stack<Integer> s = new Stack<>();
+        int maxa[] = new int[arr.length];
+
+        int nextGreater = 0;
+        for(int i = arr.length - 1; i >= 0; i--){
+            if(s.isEmpty()){
+                nextGreater = -1; 
+                s.push(arr[i]);   
+            }
+
+            else if(!s.isEmpty() && arr[i] < s.peek()){
+                nextGreater = s.peek();
+                s.push(arr[i]);
+            }
+
+            else if(!s.isEmpty() && arr[i] > s.peek()){
+                while(!s.isEmpty() && arr[i] > s.peek()){
+                    s.pop();
+                }
+                if(s.isEmpty()){
+                    nextGreater = -1;
+                    s.push(arr[i]); 
+                }else{
+                    nextGreater = s.peek();
+                    s.push(arr[i]);
+                }
+            }
+            
+            maxa[i] = nextGreater;
+        }
+        printarr(maxa);
+    }
+
+
+    public static int maxInArr(int[] arr){
+        int max = 0;
+        for(int i = 0; i < arr.length; i++){
+            if(arr[i] > max){
+                max = arr[i];
+            }
+        }
+        return max;
+    }
     public static int maxAreaHistogram(int[] arr){
+        Stack<Integer> s = new Stack<>();
+        int nsr[] = new int[arr.length];
+        int nsl[] = new int[arr.length];
+        int areaArr[] = new int[arr.length];
+        
+        // next smaller right
+        int nextSmaller = 0;
+        for(int i = arr.length - 1; i >= 0; i--){
+            if(s.isEmpty()){
+                nextSmaller = -1; 
+                s.push(i);   
+            }
+
+            else if(!s.isEmpty() && arr[i] > arr[s.peek()]){
+                nextSmaller = s.peek();
+                s.push(i);
+            }
+            else{
+                while(!s.isEmpty() && arr[i] < arr[s.peek()]){
+                    s.pop();
+                }
+                if(s.isEmpty()){
+                    nextSmaller = -1;
+                    s.push(i); 
+                }else{
+                    nextSmaller = s.peek();
+                    s.push(i);
+                }
+            }
+            
+            nsr[i] = nextSmaller;
+        }
+
+        // next smaller left
+        nextSmaller = 0; 
+        s = new Stack<>();      
+        for(int i = 0; i < arr.length; i++){
+            if(s.isEmpty()){
+                nextSmaller = -1; 
+                s.push(i);   
+            }
+
+            else if(!s.isEmpty() && arr[i] > arr[s.peek()]){
+                nextSmaller = s.peek();
+                s.push(i);
+            }
+            else{
+                while(!s.isEmpty() && arr[i] < arr[s.peek()]){
+                    s.pop();
+                }
+                if(s.isEmpty()){
+                    nextSmaller = -1;
+                    s.push(i); 
+                }else{
+                    nextSmaller = s.peek();
+                    s.push(i);
+                }
+            }
+            
+            nsl[i] = nextSmaller;
+        }
+
+        // calculating area
+        int width = 0, height = 0,area = 0;
+        for(int i = 0; i < arr.length; i++){
+            width = nsr[i] = nsl[i] - 1;
+            height = arr[i];
+            area = height * width;
+            areaArr[i] = area;
+        }
+        return maxInArr(areaArr);
         
     }
 
     public static void main(String[] args){
-        System.out.println(dupliParentheses("(((c+d)+(a+b))+(e))"));
+        int arr[] =  {2,1,5,6,2,3};
+        System.out.println(maxAreaHistogram(arr));
         
-       
-        
-        
-         
     }
 }
