@@ -121,11 +121,64 @@ class CirQueueUsingArr{
 
 }
 
+class QueueUsingLL{
+    class Node{
+        int data;
+        Node next;
+        Node(int data){
+            this.data = data;
+            this.next = null;
+        }
+    }
+    Node head;
+    Node tail;
+
+    // is empty funx
+    public boolean isEmpty(){
+        return head == null;
+    }
+    // add function
+    public void add(int data){
+        Node newNode = new Node(data);
+        if(head == null){
+            head = tail = newNode;
+            return;
+        }
+        tail.next = newNode;
+        tail = newNode;
+    }
+
+    // remove function
+    public int remove(){
+        if(head == null){
+            return -1;
+        }
+        int temp = head.data;
+
+        // if single el in LL
+        if(head == tail){
+            head = tail = null;
+        } else{
+            head = head.next;
+        }
+        
+        return temp;
+    }
+
+    public int peek(){
+            if(head == null){
+                System.out.println("notheng can be removed stack empty");
+                return -1;
+            }
+            return head.data;
+        }
+
+}
 public class QueueB{
     
 
     public static void main(String args[]){
-        QueueUsingArr q = new QueueUsingArr(5);
+        QueueUsingLL q = new QueueUsingLL();
         q.add(1);
         q.add(2);
         q.add(3);
