@@ -251,7 +251,40 @@ public class QueueB{
         
     }
 
+    public static void interleave(Queue<Integer> q){
+        // say q => 1 2 3 4 5 6 7 8 9 10
+        Queue<Integer> q1 = new LinkedList<>();
+        int n = q.size()/2;
+        for(int i = 0; i < n; i++){
+            q1.add(q.remove());
+        }
+        // now there are 2 q's q => 6 7 8 9 10; q1 => 1 2 3 4 5
+
+        //now interleaving process
+        while(!q1.isEmpty()){
+            q.add(q1.remove());
+            q.add(q.remove());
+        }
+
+        //printing the queue
+        while(!q.isEmpty()){
+            System.out.println(q.remove());
+        }
+    }
+
     public static void main(String args[]){
-        printNonRepeat("aabccxb");
+        Queue<Integer> q = new LinkedList<>();
+        q.add(1);
+        q.add(2);
+        q.add(3);
+        q.add(4);
+        q.add(5);
+        q.add(6);
+        q.add(7);
+        q.add(8);
+        q.add(9);
+        q.add(10);
+        interleave(q);
+
     }
 }
