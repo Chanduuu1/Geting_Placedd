@@ -1,3 +1,4 @@
+import java.util.*;
 class QueueUsingArr{
         int arr[];
         int size;
@@ -174,17 +175,69 @@ class QueueUsingLL{
         }
 
 }
+
+class QueueUsing2Stk{
+    // here we are using O(n) for poping and peeking, adding with O(n) written in notes
+    Stack<Integer> s1 = new Stack<>();
+    Stack<Integer> s2 = new Stack<>();
+
+
+    //isempty function for queeue
+    public boolean isEmpty(){
+        return s1.isEmpty();
+    }
+
+    // add fucntion for queue - O(1)
+    public void add(int data){
+        s1.push(data);
+    }
+
+    // remove operation - O(n)
+    public int remove(){
+        while(!s1.isEmpty()){
+            s2.push(s1.pop());
+        }
+
+        // now poping from s2
+        int val = s2.pop();
+
+        while(!s2.isEmpty()){
+            s1.push(s2.pop());
+        }
+        return val;
+
+    }
+
+    // peek function - O(n)
+    public int peek(){
+        while(!s1.isEmpty()){
+            s2.push(s1.pop());
+        }
+
+        // now poping from s2
+        int val = s2.peek();
+
+        while(!s2.isEmpty()){
+            s1.push(s2.pop());
+        }
+        return val;
+    }
+
+}
+
 public class QueueB{
     
 
     public static void main(String args[]){
-        QueueUsingLL q = new QueueUsingLL();
+        QueueUsing2Stk q = new QueueUsing2Stk();
         q.add(1);
         q.add(2);
         q.add(3);
         while(!q.isEmpty()){
             System.out.println(q.peek());
-            q.remove();            
+            System.out.println(q.remove());
+            
         }
+
     }
 }
