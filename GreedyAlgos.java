@@ -39,12 +39,47 @@ public class GreedyAlgos{
         
     }
 
-    public static void main(String[] args){
-        int start[] = {0,8,1,3,5,5};
-        int end[] = {6,9,2,4,7,9};
+    public static double fractKnapsack(double[] profit, double[]wt, int W){
+        //sorting on the basis of pro/wt
+        double ratio[] = new double[profit.length];
+        for(int i = 0; i < profit.length; i++){
+            ratio[i] = profit[i]/(double)wt[i];
+        }
 
-        // for a sorted end array
-        activitySelection(start,end);
+        // making a 2D array
+        double itemData[][] = new double[profit.length][3];
+        for(int i = 0; i < profit.length; i++){
+            itemData[i][0] = ratio[i];
+            itemData[i][1] = profit[i];
+            itemData[i][2] = wt[i];
+        }
+
+        // sorting this wrt ratio(this will do it in asc order)
+        Arrays.sort(itemData, Comparator.comparingDouble(o -> o[0]));
+
+        // greedy approch
+        double capacity = W;
+        double val = 0;
+        for(int i = profit.length-1; i >= 0 ; i--){
+            if(capacity >= itemData[i][2]){
+                capacity -= itemData[i][2];
+                val += itemData[i][1];                
+            }
+            else if(capacity < itemData[i][2] && capacity > 0){
+                val += ((capacity)/(itemData[i][2])) * itemData[i][1];
+                capacity = 0;
+                break;
+            }
+        }
+        return val;
+    }
+
+    public static void main(String[] args){
+        double profit[] = {60,100,120};
+        double wt[] = {10,20,30};
+
+        System.out.println(fractKnapsack(profit,wt,50));
+        
         
         
     }
