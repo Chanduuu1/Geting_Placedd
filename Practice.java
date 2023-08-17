@@ -276,11 +276,15 @@ public class Practice{
         printArr2D(mat);
         stairCaseSearch(mat,36);
        strCompress("aaabbcccddefffffgh");
-       */
+       
         int arr[] = {0,0,1,1,1,2,2,3,3,4};
         System.out.println(removeDuplicates(arr));
         printArr(arr);
-
+        */
+       char ch1 = 'a';
+       char ch2 = 'b';
+       System.out.println(ch1 == ch2);
+       
 
     }
 }
