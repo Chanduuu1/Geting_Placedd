@@ -74,11 +74,38 @@ public class GreedyAlgos{
         return val;
     }
 
-    public static void main(String[] args){
-        double profit[] = {60,100,120};
-        double wt[] = {10,20,30};
+    public static void indCoinsUsingRec(int val){
+        if(val == 0){
+            return;
+        }
+        int[] deno = {2000,500,100,50,20,10,5,2,1};
+        for(int i = 0; i < deno.length; i++){
+            if(deno[i] <= val){
+                System.out.println(deno[i]);
+                val = val - deno[i];
+                indCoinsUsingRec(val);
+                return;
+            }
+        } 
 
-        System.out.println(fractKnapsack(profit,wt,50));
+    }
+    public static void indCoinsUsingWoRec(int val){
+        int count = 0;
+        int[] deno = {2000,500,100,50,20,10,5,2,1};
+        for(int i = 0; i < deno.length; i++){
+            if(deno[i] <= val){
+                while(deno[i] <= val){
+                    count++;
+                    val -= deno[i];
+                    System.out.println(deno[i]);
+                }
+            }
+        } 
+        System.out.println(count);    
+    }
+
+    public static void main(String[] args){
+        indCoinsUsingWoRec(4015);
         
         
         
