@@ -438,7 +438,7 @@ class DoublyLLCreator{
     }
 }
 
-public class LinkedList{
+public class LinkedListB{
     public static void main(String[] args){
         DoublyLLCreator dll1 = new DoublyLLCreator();
         dll1.addFirst(3);
