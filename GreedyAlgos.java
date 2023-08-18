@@ -89,7 +89,7 @@ public class GreedyAlgos{
         } 
 
     }
-    public static void indCoinsUsingWoRec(int val){
+    public static void indCoinsUsingWoRec(int val){ 
         int count = 0;
         int[] deno = {2000,500,100,50,20,10,5,2,1};
         for(int i = 0; i < deno.length; i++){
@@ -104,10 +104,53 @@ public class GreedyAlgos{
         System.out.println(count);    
     }
 
+    public static int chocola(Integer[] horiCost, Integer[] vertCost){
+        // problem available in SPOJ platform
+        
+        int n = horiCost.length;
+        int m = vertCost.length;
+        // sorting in desc
+        Arrays.sort(vertCost, Collections.reverseOrder());
+        Arrays.sort(horiCost, Collections.reverseOrder());
+
+        int cost = 0;
+        int h = 0, v = 0; // acts as pointers in the array
+        int hP = 1, vP = 1; // initally hori pieces and vert pieces are the same i.e -> 1
+        while(h < n && v < m){
+            if(horiCost[h] >= vertCost[v]){
+                cost += (vP*horiCost[h]); // horiCost * no of vertical pieces it will cut through
+                h++; // move the pointer to next cost
+                hP++;  // number of vert pieces will increase by 1
+            } 
+            else{
+                cost += (hP*vertCost[v]); // vertCost * no of hori pieces it will cut through
+                v++; // move the pointer to next cost
+                vP++;  // number of vert pieces will increase by 1 
+            }
+        }
+
+        // left overs
+        while(h < n){
+            cost += (vP*horiCost[h]); // horiCost * no of vertical pieces it will cut through
+            h++; // move the pointer to next cost
+            hP++;  // number of vert pieces will increase by 1
+        }
+
+        while(v < m){
+            cost += (hP*vertCost[v]); // vertCost * no of hori pieces it will cut through
+            v++; // move the pointer to next cost
+            vP++;  // number of vert pieces will increase by 1 
+        }
+
+        return cost;
+
+
+    }
+
     public static void main(String[] args){
-        indCoinsUsingWoRec(4015);
-        
-        
+        Integer horiCost[] = {2,1,3,1,4};
+        Integer vertCost[] = {4,1,2};
+        System.out.println(chocola(horiCost,vertCost));
         
     }
 }
