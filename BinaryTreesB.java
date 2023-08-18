@@ -25,10 +25,10 @@ class BinaryTreess{
     }
 
     public static void preorderTra(Node root){
-        if(root.left == null || root.right == null){
+        if(root == null){
             return;
         }
-        System.out.println(root.val + "->");
+        System.out.print(root.data + "->");
         preorderTra(root.left);
         preorderTra(root.right);
         
@@ -41,9 +41,7 @@ public class BinaryTreesB{
     public static void main(String args[]){
         int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1};
         BinaryTreess bT1 = new BinaryTreess();
-        
-        int rootValue = bT1.buildTree(nodes).data; // this will build the tree and then also return the root node ka value
-        System.out.println(rootValue);
+        bT1.preorderTra(bT1.buildTree(nodes));
         
     }
     
