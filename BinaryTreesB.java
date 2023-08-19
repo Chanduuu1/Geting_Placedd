@@ -1,6 +1,7 @@
+import java.util.*;
 class BinaryTreess{
     // unless and until the main class is not static you need not worry!!
-    static class Node{
+    public static class Node{
         int data;
         Node left;
         Node right;
@@ -31,17 +32,70 @@ class BinaryTreess{
         System.out.print(root.data + "->");
         preorderTra(root.left);
         preorderTra(root.right);
-        
-        
+    }
+
+    public static void inorderTra(Node root){
+        if(root == null){
+            return;
+        }
+        inorderTra(root.left);
+        System.out.print(root.data + "->");
+        inorderTra(root.right);
+    }
+
+
+    public static void postorderTra(Node root){
+        if(root == null){
+            return;
+        }
+        postorderTra(root.left);
+        postorderTra(root.right);
+        System.out.print(root.data + "->");
+    }
+
+    public static void lvlOrderTra(Node root){
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        q.add(null);
+        while(!q.isEmpty()){
+            Node currNode = q.remove();
+            if(currNode == null){
+                System.out.println();
+                if(q.isEmpty()){
+                    break;
+                }
+                else{
+                    q.add(null);
+                }
+            }
+            else{
+                System.out.print(currNode.data + "->");
+                if(currNode.left != null){
+                    q.add(currNode.left);
+                }
+                if(currNode.right != null){
+                    q.add(currNode.right);
+                }
+            }
+            
+
+            
+        }
     }
 }
 
-public class BinaryTreesB{  
-
+public class BinaryTreesB extends BinaryTreess{  
     public static void main(String args[]){
         int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1};
         BinaryTreess bT1 = new BinaryTreess();
-        bT1.preorderTra(bT1.buildTree(nodes));
+        Node root = bT1.buildTree(nodes);
+        bT1.preorderTra(root);
+        System.out.println();
+        bT1.inorderTra(root);
+        System.out.println();
+        bT1.postorderTra(root);
+        System.out.println();
+        bT1.lvlOrderTra(root);
         
     }
     
