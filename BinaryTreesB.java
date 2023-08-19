@@ -82,6 +82,19 @@ class BinaryTreess{
             
         }
     }
+
+    public static int heightOfTree(Node root){
+        Node currNode = root;
+        if(root == null){
+            return 0;
+        }
+        int hL = heightOfTree(currNode.left);
+        int hR = heightOfTree(currNode.right);
+
+        int ht = (Math.max(hL,hR) + 1);
+
+        return ht;
+    }
 }
 
 public class BinaryTreesB extends BinaryTreess{  
@@ -89,14 +102,7 @@ public class BinaryTreesB extends BinaryTreess{
         int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1};
         BinaryTreess bT1 = new BinaryTreess();
         Node root = bT1.buildTree(nodes);
-        bT1.preorderTra(root);
-        System.out.println();
-        bT1.inorderTra(root);
-        System.out.println();
-        bT1.postorderTra(root);
-        System.out.println();
-        bT1.lvlOrderTra(root);
-        
+        System.out.println(heightOfTree(root));
     }
     
 }
