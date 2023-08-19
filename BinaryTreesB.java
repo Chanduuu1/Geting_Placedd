@@ -95,14 +95,41 @@ class BinaryTreess{
 
         return ht;
     }
+
+    public static int countNodes(Node root){
+        if(root == null){
+            return 0;
+        }
+
+        int lC = countNodes(root.left);
+        int rC = countNodes(root.right);
+
+        return (lC + rC + 1);
+    }
+
+    public static int sumOfNodes(Node root){
+        if(root == null){
+            return 0;
+        }
+
+        int lS = sumOfNodes(root.left);
+        int rS = sumOfNodes(root.right);
+
+        int sum = lS + rS + root.data;
+        
+        
+        return sum; 
+    }
 }
 
 public class BinaryTreesB extends BinaryTreess{  
     public static void main(String args[]){
-        int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,-1,6,-1,-1};
+        int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
         BinaryTreess bT1 = new BinaryTreess();
+        
         Node root = bT1.buildTree(nodes);
-        System.out.println(heightOfTree(root));
+        System.out.println(sumOfNodes(root));
+        lvlOrderTra(root);
     }
     
 }
