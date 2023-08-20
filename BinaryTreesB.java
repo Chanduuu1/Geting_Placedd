@@ -120,16 +120,89 @@ class BinaryTreess{
         
         return sum; 
     }
+
+
+
+    public static class Info{ // isme store karunga node aur uska hd
+        Node node;
+        int hd;
+        public Info(Node node,int hd){
+            this.node = node;
+            this.hd = hd;
+        }
+    }
+    public static void topView(Node root){
+        // level order traversal
+        Queue<Info> q = new LinkedList<>();  // hum lvl order traversal, but instead of storing node, we will be storing 
+                                             // "Info" which contains node ka sab kuch + additionally hd of that node
+        
+        HashMap<Integer, Node> map = new HashMap<>();  // hash table me store karenge hd aur uss hd ka node
+        q.add(new Info(root,0));  
+        q.add(null);
+        
+        int max = 0, min = 0; // this is just to store range kaha se kaha tak
+        
+        while(!q.isEmpty()){
+            Info currInfo = q.remove();
+            if(currInfo == null){
+                if(q.isEmpty()){
+                    break; // q khaali
+                }
+                else{
+                    q.add(null); 
+                }
+            }
+            else{
+                if(!map.containsKey(currInfo.hd)){ // check kar hash map me yeh hd hai ke nahi
+                    map.put(currInfo.hd,currInfo.node);
+                }
+
+                if(currInfo.node.left != null){     // basic, level order tra step , bass we are adding info instead of data
+                    q.add(new Info(currInfo.node.left, currInfo.hd - 1));
+                    min = Math.min(min, currInfo.hd-1);
+                }
+
+                if(currInfo.node.right != null){
+                    q.add(new Info(currInfo.node.right, currInfo.hd+1));
+                    max = Math.max(max, currInfo.hd+1);
+                }
+            }
+        }
+        // for prinntint the top view
+            for(int i = min; i <= max; i++){
+                System.out.print(map.get(i).data+" ");
+            }
+            System.out.println();
+    }
 }
+
+
 
 public class BinaryTreesB extends BinaryTreess{  
     public static void main(String args[]){
         int nodes[] = {1,2,4,-1,-1,5,-1,-1,3,6,-1,-1,7,-1,-1};
         BinaryTreess bT1 = new BinaryTreess();
+        Node root1 = bT1.buildTree(nodes);
         
-        Node root = bT1.buildTree(nodes);
-        System.out.println(sumOfNodes(root));
+        /* 
+                   0
+                 /   \
+                1     2
+              /  \   / \
+             3   4  5   6
+        
+         */
+
+        BinaryTreess bT2 = new BinaryTreess();
+        Node root = new Node(0);
+        root.left = new Node(1);
+        root.right = new Node(2);
+        root.left.left = new Node(3);
+        root.left.right = new Node(4);
+        root.right.left = new Node(5);
+        root.right.right = new Node(6);
         lvlOrderTra(root);
+        topView(root);
     }
     
 }
