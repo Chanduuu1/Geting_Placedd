@@ -174,6 +174,83 @@ class BinaryTreess{
             }
             System.out.println();
     }
+
+
+    public static void kthLvlDisplayIterative(Node root,int k){
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        q.add(null);
+        int lvl = 1;
+        while(!q.isEmpty()){
+            Node curr = q.remove();
+            if(curr == null){
+                if(q.isEmpty()){
+                    break;
+                }
+                else{
+                    q.add(null);
+                    lvl += 1; 
+                    System.out.println();
+                }
+            }
+            else{
+                if(lvl == k){
+                    System.out.print(curr.data + " ");
+                }
+                if(lvl > k){
+                    break;
+                }
+                
+                if(curr.left != null){
+                    q.add(curr.left);
+                }
+                if(curr.right != null){
+                    q.add(curr.right);
+                }
+            }
+        }
+    }
+
+    public static void kthLvlDisplayRec(Node root, int Nodelvl, int k){
+        
+        if(root == null){
+            return;
+        }
+
+        if(Nodelvl == k){
+            System.out.print(root.data + " ");
+            return;
+        }
+        kthLvlDisplayRec(root.left,Nodelvl + 1, k);
+        kthLvlDisplayRec(root.right,Nodelvl + 1, k);
+        
+        
+        
+    }
+
+    
+    public static ArrayList<Integer> getPath(Node root, int n1, ArrayList<Integer> path){
+
+        
+    }
+    public static int lCA(Node root, int n1, int n2){
+        ArrayList<Integer> path1 = new ArrayList<>();
+        ArrayList<Integer> path2 = new ArrayList<>();
+
+        getPath(root,n1,path1);
+        getPath(root,n2,path2);
+
+        while(i < path1.size() && j < path2.size()){
+            if(path1.get(i) == path2.get(j)){
+                i++;
+                j++;
+            }
+            else{
+                return path1.get(i-1);
+            }
+        }
+        return -1;
+    }
 }
 
 
@@ -202,7 +279,7 @@ public class BinaryTreesB extends BinaryTreess{
         root.right.left = new Node(5);
         root.right.right = new Node(6);
         lvlOrderTra(root);
-        topView(root);
+        kthLvlDisplayRec(root,1,2);
     }
     
 }
