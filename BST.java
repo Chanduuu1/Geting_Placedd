@@ -1,4 +1,9 @@
+import java.util.*;
+
 public class BST{
+
+
+
     static class Node{
         int data;
         Node left;
@@ -9,6 +14,35 @@ public class BST{
         }
     }
 
+    public static void lvlOrderTra(Node root){
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        q.add(null);
+        while(!q.isEmpty()){
+            Node currNode = q.remove();
+            if(currNode == null){
+                System.out.println();
+                if(q.isEmpty()){
+                    break;
+                }
+                else{
+                    q.add(null);
+                }
+            }
+            else{
+                System.out.print(currNode.data + "->");
+                if(currNode.left != null){
+                    q.add(currNode.left);
+                }
+                if(currNode.right != null){
+                    q.add(currNode.right);
+                }
+            }
+            
+
+            
+        }
+    }
     public static Node inertIntoBST(Node root, int val){
         if(root == null){
             // the first value comes in
@@ -52,17 +86,38 @@ public class BST{
 
     }
 
+
+    public static void printInRage(Node root, int k1, int k2){
+        if(root == null){
+            return;
+        }
+
+        // agar k1 <= rootval <= k2
+        if(k1 <= root.data && root.data <= k2){
+            printInRage(root.left,k1,k2);
+            System.out.print(root.data + " ");
+            printInRage(root.right,k1,k2);
+        }else if(root.data < k1){
+            printInRage(root.right,k1,k2);
+        }else if(root.data > k2){
+            printInRage(root.left,k1,k2);
+        }
+
+
+
+    }
+
+
     public static void main(String[] args){
-        int[] val = {8,5,6,3,1,4,10,11,14};
+        int[] val = {8,5,3,1,4,6,10,11,14};
         Node root = null;
         for(int i = 0; i < val.length; i++){
             root = inertIntoBST(root,val[i]);
         }
 
-        inorder(root);
-        System.out.println();
-        
-        System.out.println(search(root,9));
+        lvlOrderTra(root);
+
+        printInRage(root,5,12);
         
         
     }
