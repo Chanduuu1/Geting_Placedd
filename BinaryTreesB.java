@@ -266,19 +266,23 @@ class BinaryTreess{
 
 
 
-    public static int sumTree(Node root){
+    public static int SumTree(Node root){
+        //whenever in doubt, analyse the leaf node isolate it from the tree and analyse it and its interaction with its parents.
+
         if(root == null){
             return 0;
         }
-        
-        int lSubTreeS = sumTree(root.left);
-        int rSubTreeS = sumTree(root.right);
-        int data = root.data;
-        root.data = lSubTreeS + rSubTreeS;
+        // nodes value => rightsubtree sum + leftsubtree sum
+        int leftSubtreeSum = SumTree(root.left);
+        int rightSubtreeSum = SumTree(root.right);
+        int selfSum = root.data;
 
+        root.data = leftSubtreeSum + rightSubtreeSum;  // root ka value is only left subtree + right subtree
+        return leftSubtreeSum+rightSubtreeSum+selfSum; // root returns the value of it along with its children logo ka sum to its parent 
+                                                       // which inturn becomes the subtree ka sum.
 
-        return data;
-    }
+         
+    }   
     
 }
 
@@ -300,16 +304,17 @@ public class BinaryTreesB extends BinaryTreess{
          */
 
         BinaryTreess bT2 = new BinaryTreess();
-        Node root = new Node(0);
-        root.left = new Node(1);
-        root.right = new Node(2);
-        root.left.left = new Node(3);
-        root.left.right = new Node(4);
-        root.right.left = new Node(5);
-        root.right.right = new Node(6);
+        Node root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.right.left = new Node(6);
+        root.right.right = new Node(7);
         lvlOrderTra(root);
-        System.out.println(sumTree(root));
-        System.out.println(lca(root,3,6));
+        System.out.println(SumTree(root));
+        lvlOrderTra(root);
+        //System.out.println(lca(root,3,6));
         
         
     }
