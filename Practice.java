@@ -260,7 +260,27 @@ public class Practice{
             return a+1;
         } 
     }
+    public static int occur(int[] arr, int key, int si, int ei){
+        if(si == ei){
+            System.out.println(arr[si]);
+            return -1;
+            
+        }
+        int mid = si + ([ei]/2 - [si]/2);
+        if(arr[mid] > key){
+            occur(arr,key,si,mid-1);
+        }
+        else if (arr[mid] < key){
+            occur(arr,key,mid+1,ei);
+        }
+        else{
+            System.out.println(arr[mid]);
+            
+        }
 
+        return -1;
+
+    }
     public static void main(String args[]){
         /*
         Scanner sc = new Scanner(System.in);
@@ -281,9 +301,11 @@ public class Practice{
         System.out.println(removeDuplicates(arr));
         printArr(arr);
         */
-       char ch1 = 'a';
-       char ch2 = 'b';
-       System.out.println(ch1 == ch2);
+        int[] arr = {3, 2, 4, 5, 6, 2, 7, 2, 2};
+        Arrays.sort(arr);
+        printArr(arr);
+        System.out.println(occur(arr,2,0,8));
+        
        
 
     }
