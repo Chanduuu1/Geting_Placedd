@@ -69,6 +69,14 @@ public class BST{
         System.out.print(root.data + " ");
         inorder(root.right);
     }
+    public static void preorderTra(Node root){
+        if(root == null){
+            return;
+        }
+        System.out.print(root.data + "->");
+        preorderTra(root.left);
+        preorderTra(root.right);
+    }
 
 
     public static boolean search(Node root,int key){
@@ -167,25 +175,63 @@ public class BST{
         return root;
     }
 
+    public static Node createBST(int[] arr,int start,int end){
+        if(start > end){
+            return null;
+        }
+
+        int mid = (start+end)/2;
+        Node root = new Node(arr[mid]);
+        root.left = createBST(arr,start,mid-1);
+        root.right = createBST(arr,mid+1,end);
+
+        return root;
+    }
+
+
+    public static Node conertToBBST(Node root, int start,int end){
+        // inorder sequence generation
+        ArrayList<Integer> inorderAL = new ArrayList<>();
+        inorder2(root,inorderAL);
+
+        // Create BBST using this inorder seq.
+        root = createBST2(inorderAL,0,inorderAL.size()-1);
+
+        return root;
+    }
+    public static Node createBST2(ArrayList<Integer> a,int start,int end){
+        if(start > end){
+            return null;
+        }
+
+        int mid = (start+end)/2;
+        Node root = new Node(a.get(mid));
+        root.left = createBST(a,start,mid-1);
+        root.right = createBST(a,mid+1,end);
+
+        return root;
+    }
+    public static void inorder2(Node root,ArrayList<Integer> a){
+        if(root == null){
+            return;
+        }
+        inorder(root.left,a);
+        a.add(root.data);
+        inorder(root.right,a);
+    }
     
     
     public static void main(String[] args){
-        int[] val = {8,5,3,1,4,6,10,11,14};
+        int[] val = {8,5,3,1,4,6,10,11,14,15};
         Node root = null;
         for(int i = 0; i < val.length; i++){
             root = inertIntoBST(root,val[i]);
         }
 
-        ArrayList<Integer> path = new ArrayList<>();
-        //rootToLeaf(root,path);
-        //System.out.println(isValidBST(root,null,null));
-        
-        lvlOrderTra(root);
-        System.out.println(isValidBST(root,null,null));
-        System.out.println();
-        root = mirror(root); // roots value will get updated
-        lvlOrderTra(root);
-        System.out.println(isValidBST(root,null,null));
+
+        int[] sortVal = {1,3,4,5,6,8,10,11,14,15};
+        Node root2 = createBST(sortVal,0,sortVal.length-1);
+        preorderTra(root2);
 
         
     }
