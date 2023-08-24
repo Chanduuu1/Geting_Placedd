@@ -86,7 +86,6 @@ public class BST{
 
     }
 
-
     public static void printInRage(Node root, int k1, int k2){
         if(root == null){
             return;
@@ -108,6 +107,31 @@ public class BST{
     }
 
 
+    public static void printPath(ArrayList<Integer> path){
+        for(int i = 0; i < path.size(); i++){
+            System.out.print(path.get(i) + "->");
+        }
+        System.out.println();
+    }
+    public static void rootToLeaf(Node root, ArrayList<Integer> path){
+        if(root == null){
+            return;
+        }
+
+        path.add(root.data);
+
+        if(root.left == null  && root.right == null){
+            // print path and return
+            printPath(path);
+        }
+
+        
+        rootToLeaf(root.left,path);
+        rootToLeaf(root.right,path);
+        path.remove(path.size()-1);
+    }
+
+
     public static void main(String[] args){
         int[] val = {8,5,3,1,4,6,10,11,14};
         Node root = null;
@@ -115,9 +139,9 @@ public class BST{
             root = inertIntoBST(root,val[i]);
         }
 
-        lvlOrderTra(root);
-
-        printInRage(root,5,12);
+        //lvlOrderTra(root);
+        ArrayList<Integer> path = new ArrayList<>();
+        rootToLeaf(root,path);
         
         
     }
