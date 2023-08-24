@@ -189,7 +189,7 @@ public class BST{
     }
 
 
-    public static Node conertToBBST(Node root, int start,int end){
+    public static Node conertToBBST(Node root){
         // inorder sequence generation
         ArrayList<Integer> inorderAL = new ArrayList<>();
         inorder2(root,inorderAL);
@@ -206,8 +206,8 @@ public class BST{
 
         int mid = (start+end)/2;
         Node root = new Node(a.get(mid));
-        root.left = createBST(a,start,mid-1);
-        root.right = createBST(a,mid+1,end);
+        root.left = createBST2(a,start,mid-1);
+        root.right = createBST2(a,mid+1,end);
 
         return root;
     }
@@ -215,9 +215,9 @@ public class BST{
         if(root == null){
             return;
         }
-        inorder(root.left,a);
+        inorder2(root.left,a);
         a.add(root.data);
-        inorder(root.right,a);
+        inorder2(root.right,a);
     }
     
     
@@ -229,10 +229,36 @@ public class BST{
         }
 
 
-        int[] sortVal = {1,3,4,5,6,8,10,11,14,15};
-        Node root2 = createBST(sortVal,0,sortVal.length-1);
-        preorderTra(root2);
+        /*
+                8
+               / \
+              4   9
+             /     \
+            3       10
+           /          \
+          1            15
 
+          to be converted to
+                 8
+               /   \
+              3     10
+             / \   /  \
+            1  4   9   15
+
+         */
+
+        Node root2 = new Node(8);
+        root2.right = new Node(9);
+        root2.right.right = new Node(10);
+        root2.right.right.right = new Node(15);
+        root2.left = new Node(4);
+        root2.left.left = new Node(3);
+        root2.left.left.left = new Node(1);
+
+        lvlOrderTra(root2);
+        conertToBBST(root2);
+        lvlOrderTra(root2);
+        
         
     }
 }
