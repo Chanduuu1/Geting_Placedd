@@ -14,6 +14,7 @@ public class BST{
         }
     }
 
+
     public static void lvlOrderTra(Node root){
         Queue<Node> q = new LinkedList<>();
         q.add(root);
@@ -69,6 +70,7 @@ public class BST{
         inorder(root.right);
     }
 
+
     public static boolean search(Node root,int key){
         if(root == null){
             return false;
@@ -85,6 +87,7 @@ public class BST{
         }
 
     }
+
 
     public static void printInRage(Node root, int k1, int k2){
         if(root == null){
@@ -132,6 +135,40 @@ public class BST{
     }
 
 
+    public static boolean isValidBST(Node root, Node min, Node max){
+        if(root == null){
+            return true;
+        }
+
+        if(min != null && root.data <= min.data){
+            return false;
+        }
+
+        if(max != null && root.data >= max.data){
+            return false;
+        }
+
+        return isValidBST(root.left,min,root) && 
+                    isValidBST(root.right,root,max);
+                    // because koi ek bhi false ho gaya then it will return false!
+    }
+
+
+    public static Node mirror(Node root){
+        if(root == null){
+            return null; // null ka toh koi mirror hota nai hai so uska mirror node also null
+        }
+
+        Node mirroredLeftSubTree = mirror(root.left);
+        Node mirroredRightSubTree = mirror(root.right);
+        root.right = mirroredLeftSubTree;
+        root.left = mirroredRightSubTree;
+
+        return root;
+    }
+
+    
+    
     public static void main(String[] args){
         int[] val = {8,5,3,1,4,6,10,11,14};
         Node root = null;
@@ -139,10 +176,17 @@ public class BST{
             root = inertIntoBST(root,val[i]);
         }
 
-        //lvlOrderTra(root);
         ArrayList<Integer> path = new ArrayList<>();
-        rootToLeaf(root,path);
+        //rootToLeaf(root,path);
+        //System.out.println(isValidBST(root,null,null));
         
+        lvlOrderTra(root);
+        System.out.println(isValidBST(root,null,null));
+        System.out.println();
+        root = mirror(root); // roots value will get updated
+        lvlOrderTra(root);
+        System.out.println(isValidBST(root,null,null));
+
         
     }
 }
