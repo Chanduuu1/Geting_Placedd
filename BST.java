@@ -270,6 +270,70 @@ public class BST{
 
 
 
+// Merge 2 BST
+    public static Node mergedBST(ArrayList<Integer> finalIno, int st, int ed){
+        if(st > ed){
+            return null;
+        }
+        int mid = (st+ed)/2;
+        Node root = new Node(finalIno.get(mid));
+        root.left = mergedBST(finalIno,st,mid-1);
+        root.right = mergedBST(finalIno,mid+1,ed);
+
+        return root;
+
+    }
+    public static ArrayList<Integer> merge(ArrayList<Integer> seq1, ArrayList<Integer> seq2){
+        ArrayList<Integer> finalIno = new ArrayList<>();
+        int i = 0,j = 0;
+        while(i < seq1.size() && j < seq2.size()){
+            if(seq1.get(i) >= seq2.get(j)){
+                finalIno.add(seq2.get(j));
+                j++;
+            }
+            else{
+                finalIno.add(seq1.get(i));
+                i++;
+            }
+        }
+
+        while(i < seq1.size()){
+            finalIno.add(seq1.get(i));
+            i++;
+        }
+        while(j < seq2.size()){
+            finalIno.add(seq2.get(j));
+            j++;
+        }
+
+        return finalIno;
+
+    }
+    public static void inoCal(Node root, ArrayList<Integer> inoSeq){
+        if(root == null){
+            return;
+        }
+
+        inoCal(root.left,inoSeq);
+        inoSeq.add(root.data);
+        inoCal(root.right,inoSeq);
+    }
+    public static Node mergeBSTs(Node root1, Node root2){
+        ArrayList<Integer> inoSeq1 = new ArrayList<>();
+        ArrayList<Integer> inoSeq2 = new ArrayList<>();
+        ArrayList<Integer> finalIno = new ArrayList<>();
+
+        inoCal(root1,inoSeq1);
+        inoCal(root2,inoSeq2);
+        finalIno = merge(inoSeq1,inoSeq2);
+
+        Node root = mergedBST(finalIno,0,finalIno.size()-1);
+        return root;
+
+
+    }
+// yeesss systum
+
 
 
     
@@ -286,19 +350,15 @@ public class BST{
                        
                
          */
-        Node root = new Node(50);
-        root.right = new Node(60);
-        root.right.right = new Node(70);
-        root.right.right.right = new Node(80);
-        root.left = new Node(30);
-        root.left.left = new Node(5);
-        root.left.right = new Node(20);
-        root.right.left = new Node(45);
-        root.right.right.left = new Node(65);
+        Node root1 = new Node(2);
+        root1.left = new Node(1);
+        root1.right = new Node(4);
+        Node root2 = new Node(9);
+        root2.left = new Node(3);
+        root2.right = new Node(12);
 
-        System.out.println(maxSize);
-        Info information = largestBST(root);
-        System.out.println(maxSize);
+        Node root = mergeBSTs(root1, root2);
+        preorderTra(root);
         
     
         
