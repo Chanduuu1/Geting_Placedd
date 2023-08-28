@@ -2,8 +2,6 @@ import java.util.*;
 
 public class BST{
 
-
-
     static class Node{
         int data;
         Node left;
@@ -12,6 +10,25 @@ public class BST{
         Node(int data){
             this.data = data;
         }
+    }
+
+
+    public static Node inertIntoBST(Node root, int val){
+        if(root == null){
+            // the first value comes in
+            root = new Node(val);
+            return root;
+        }
+
+        if(val > root.data){
+            root.right = inertIntoBST(root.right,val); // yeh root.right and root.left ka significance hai! issi waja se end me real root of tree return kar paenge
+        }
+        if(val < root.data){
+            root.left = inertIntoBST(root.left,val);
+        }
+
+        return root;
+
     }
 
 
@@ -43,23 +60,6 @@ public class BST{
 
             
         }
-    }
-    public static Node inertIntoBST(Node root, int val){
-        if(root == null){
-            // the first value comes in
-            root = new Node(val);
-            return root;
-        }
-
-        if(val > root.data){
-            root.right = inertIntoBST(root.right,val); // yeh root.right and root.left ka significance hai! issi waja se end me real root of tree return kar paenge
-        }
-        if(val < root.data){
-            root.left = inertIntoBST(root.left,val);
-        }
-
-        return root;
-
     }
     public static void inorder(Node root){
         if(root == null){
@@ -219,45 +219,88 @@ public class BST{
         a.add(root.data);
         inorder2(root.right,a);
     }
-    
-    
-    public static void main(String[] args){
-        int[] val = {8,5,3,1,4,6,10,11,14,15};
-        Node root = null;
-        for(int i = 0; i < val.length; i++){
-            root = inertIntoBST(root,val[i]);
+
+
+
+
+
+
+// lasrget BST Q
+    static class Info{
+        boolean isBST;
+        int size;
+        int min;
+        int max;
+        public Info(boolean isBST, int size, int min, int max){
+            this.isBST = isBST;
+            this.size = size;
+            this.min = min;
+            this.max = max;
+        }
+        
+    }
+    public static int maxSize = 0;
+    public static Info largestBST(Node root){
+        if(root == null){
+            return new Info(true, 0, Integer.MAX_VALUE, Integer.MIN_VALUE);
         }
 
 
+        Info leftInfo = largestBST(root.left);
+        Info rightInfo = largestBST(root.right);
+
+        int size = leftInfo.size + rightInfo.size + 1;
+        int min = Math.min(root.data, Math.min(leftInfo.min, rightInfo.min));
+        int max = Math.max(root.data, Math.max(leftInfo.max, rightInfo.max));
+
+        // now cecking isValid BST
+        if(root.data <= leftInfo.max || root.data >= rightInfo.min){
+            return new Info(false,size,min,max);
+        }
+
+        if(leftInfo.isBST && rightInfo.isBST){
+            maxSize = Math.max(maxSize,size);
+            return new Info(true,size,min,max);
+        }
+
+        
+        return new Info(false,size,min,max); 
+    }
+
+
+
+
+
+
+    
+    
+    public static void main(String[] args){
         /*
-                8
-               / \
-              4   9
-             /     \
-            3       10
-           /          \
-          1            15
-
-          to be converted to
-                 8
-               /   \
-              3     10
-             / \   /  \
-            1  4   9   15
-
+                        50                 expected largest BST size = 5        
+                      /    \
+                    30     60                 60                 
+                   /  \   /   \              /   \
+                  5   20  45   70           45   70
+                              /   \             /   \
+                             65   80           65   80 
+                       
+               
          */
+        Node root = new Node(50);
+        root.right = new Node(60);
+        root.right.right = new Node(70);
+        root.right.right.right = new Node(80);
+        root.left = new Node(30);
+        root.left.left = new Node(5);
+        root.left.right = new Node(20);
+        root.right.left = new Node(45);
+        root.right.right.left = new Node(65);
 
-        Node root2 = new Node(8);
-        root2.right = new Node(9);
-        root2.right.right = new Node(10);
-        root2.right.right.right = new Node(15);
-        root2.left = new Node(4);
-        root2.left.left = new Node(3);
-        root2.left.left.left = new Node(1);
-
-        lvlOrderTra(root2);
-        conertToBBST(root2);
-        lvlOrderTra(root2);
+        System.out.println(maxSize);
+        Info information = largestBST(root);
+        System.out.println(maxSize);
+        
+    
         
         
     }
