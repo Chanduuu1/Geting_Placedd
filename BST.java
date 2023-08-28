@@ -263,7 +263,7 @@ public class BST{
             return new Info(true,size,min,max);
         }
 
-        
+        // this happens when either of the subtree return true and the other returns false
         return new Info(false,size,min,max); 
     }
 
