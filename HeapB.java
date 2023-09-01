@@ -80,17 +80,60 @@ public class HeapB{
         }
     }
 
-    public static void main(String args[]){
-        Heap h = new Heap();
-        h.add(3);
-        h.add(4);
-        h.add(1);
-        h.add(5);
-        h.add(2);
 
-        while(!h.isEmpty()){
-            System.out.println(h.peek());
-            h.remove();
+
+    public static void heapSort(int arr[]){
+        // step 1 - build max Heap
+        int n = arr.length;
+        for(int i = n/2 ; i >= 0; i--){
+            maxHeapify(arr,i,n); // pushing ke time size ka zarurat padega to abhi se hi daal raha hu, although yaha n ka mahotwa nahi hai
+
+        }
+
+
+        //step 2 - push largest at end
+        for(int i = n-1; i > 0; i--){
+            //swap largest to last 
+            int temp = arr[0];
+            arr[0] = arr[i];
+            arr[i] = temp;
+
+            maxHeapify(arr,0,i); // (0,i) 0 - yeh pass kanre se wapas pura maxHeap banega | i - last element ignore marenge iss se, notes ka dry run dekh samjga
+
+        }
+
+    }
+    public static void maxHeapify(int arr[], int i, int size){
+        int left = 2*i+1;
+        int right = 2*i+2;
+        int maxIdx = i;
+
+        if(left < size && arr[maxIdx] < arr[left]){
+            maxIdx = left;
+        }
+        if(right < size && arr[maxIdx] < arr[right]){
+            maxIdx = right;
+        }
+
+        if(maxIdx != i){
+            // iss if ka mtlb hai ki filal i jo max ele hoga samja tha unke children se, woh nahi hai so swap
+            int temp = arr[i];
+            arr[i] = arr[maxIdx];
+            arr[maxIdx] = temp;
+
+            maxHeapify(arr,maxIdx,size);    // ye sirf heapify ka logic hai pichle q ne clear hogaya hoga
+                                            // yaha masala sirf heapSort function ke code m h
+        }
+    }
+
+
+
+
+    public static void main(String args[]){
+        int[] arr = {1,2,4,5,3};
+        heapSort(arr);
+        for(int i = 0; i < 5; i++){
+            System.out.println(arr[i]);
             
         }
     }
