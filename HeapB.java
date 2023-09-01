@@ -128,12 +128,40 @@ public class HeapB{
 
 
 
+    static class Points implements Comparable<Points>{
+        int x;
+        int y;
+        int distSq;
+        int idx;
+
+        public Points(int x,int y,int distSq,int idx){
+            this.x = x;
+            this.y = y;
+            this.distSq = distSq;
+            this.idx = idx;
+        }
+
+        @Override
+        public int compareTo(Points p2){
+            return this.distSq - p2.distSq; // +ve mtlb this bada, -ve mtlb this chota ...... bada integer mtlb less priority
+        }
+
+
+    }
 
     public static void main(String args[]){
-        int[] arr = {1,2,4,5,3};
-        heapSort(arr);
-        for(int i = 0; i < 5; i++){
-            System.out.println(arr[i]);
+        int pts[][] = {{3,3}, {5,-1}, {-2,4}};
+        int k = 2;
+
+        PriorityQueue<Points> p = new PriorityQueue<>();
+        for(int i = 0; i < pts.length; i++){
+            int distSq = pts[i][0]*pts[i][0] + pts[i][1]*pts[i][1];
+            p.add(new Points(pts[i][0],pts[i][1],distSq,i));
+        }
+
+        //nearest k restraunts
+        for(int i = 0; i < k; i++){
+            System.out.println("Restraunt"+ p.remove().idx);
             
         }
     }
