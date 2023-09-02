@@ -149,20 +149,27 @@ public class HeapB{
 
     }
 
+
+
+    // Rope joining question written inside main function
     public static void main(String args[]){
-        int pts[][] = {{3,3}, {5,-1}, {-2,4}};
-        int k = 2;
-
-        PriorityQueue<Points> p = new PriorityQueue<>();
-        for(int i = 0; i < pts.length; i++){
-            int distSq = pts[i][0]*pts[i][0] + pts[i][1]*pts[i][1];
-            p.add(new Points(pts[i][0],pts[i][1],distSq,i));
+        int ropes[] = {2,3,3,4,6};
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(int i = 0; i < ropes.length; i++){
+            pq.add(ropes[i]);
         }
 
-        //nearest k restraunts
-        for(int i = 0; i < k; i++){
-            System.out.println("Restraunt"+ p.remove().idx);
-            
+        int cost = 0;
+        while(pq.size() > 1){
+            // find the 2 min len in pq at any given iterations.
+            int min1 = pq.remove();
+            int min2 = pq.remove();
+            cost += min1 + min2;
+            pq.add(min1+min2);
         }
+
+        System.out.println("Minimum cost of joining  ropes is "+ cost);
+        
+
     }
 }
