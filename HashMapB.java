@@ -1,28 +1,39 @@
 import java.util.*;
 public class HashMapB{
 
-    // Majority Element code O(n)
-    public static void main(String args[]){
-        int arr[] = {1,3,2,5,1,3,1,5,1};
-        HashMap<Integer, Integer> hm = new HashMap<>();
+    // Valid anagram code
+    public static boolean isAnagram(String s, String t){
+        HashMap<Character, Integer> map = new HashMap<>();
 
-        for(int i = 0; i < arr.length; i++){
-            int num = arr[i];
-            if(hm.containsKey(num)){
-                hm.put(num,hm.get(num)+1);
+        for(int i = 0; i < s.length(); i++){
+            char ch = s.charAt(i);
+            map.put(ch,map.getOrDefault(ch, 0) + 1); // aggar ch key get hua map me toh uska value return karega nahi toh instead of returning null, this function will return the default value of 0 which is passes! why 0 default soch khud; 
+        }
+
+        for(int i = 0; i < t.length(); i++){
+            char ch = t.charAt(i);
+            if(map.get(ch) != null){ // iska mtlb value map me exists karti hai tulip, lipid wala case nahi hai 'd' wala
+                if(map.get(ch) == 1){
+                    map.remove(ch);
+                }
+                else{
+                    map.put(ch,map.get(ch) - 1);
+                }
             }
             else{
-                hm.put(num,1);
+                return false;
             }
         }
 
-        Set<Integer> keySet = hm.keySet();
-        for(Integer key : keySet){
-            if(hm.get(key) > arr.length/3){
-                System.out.println(key); 
-            }
-        }
-
+        return map.isEmpty();
+    }
+    
+    
+    
+    public static void main(String args[]){
+        String s = "tulip";
+        String t = "lipid";
+        System.out.println(isAnagram(s,t));
         
     }
 }
