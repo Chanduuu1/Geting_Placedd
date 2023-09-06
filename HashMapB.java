@@ -1,23 +1,28 @@
 import java.util.*;
 public class HashMapB{
 
+    // Majority Element code O(n)
     public static void main(String args[]){
-        HashMap<String, Integer> hm = new HashMap<>();
-        hm.put("India",100);
-        hm.put("US",50);
-        hm.put("Nepal",30);
-        hm.put("Pakistan",20);
-        hm.put("Japan",80);
+        int arr[] = {1,3,2,5,1,3,1,5,1};
+        HashMap<Integer, Integer> hm = new HashMap<>();
 
-        //to iterate
-        Set<String> keys = hm.keySet();
-        System.out.println(keys);
-        
-
-        //for each iterator
-        for(String k : keys){
-            System.out.println("key:"+k+", value:"+hm.get(k));
-            
+        for(int i = 0; i < arr.length; i++){
+            int num = arr[i];
+            if(hm.containsKey(num)){
+                hm.put(num,hm.get(num)+1);
+            }
+            else{
+                hm.put(num,1);
+            }
         }
+
+        Set<Integer> keySet = hm.keySet();
+        for(Integer key : keySet){
+            if(hm.get(key) > arr.length/3){
+                System.out.println(key); 
+            }
+        }
+
+        
     }
 }
