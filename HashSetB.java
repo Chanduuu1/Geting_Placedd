@@ -1,36 +1,36 @@
 import java.util.*;
 public class HashSetB{
 
-    public static void main(String args[]){
-        //Union and intersection problem
-        int arr1[] = {7,3,9};
-        int arr2[] = {6,3,9,2,9,4};
-        HashSet<Integer> hs = new HashSet<>();
+    public static String getStartPt(HashMap<String, String> tickets){
+        HashMap<String, String> revMap = new HashMap<>();
 
-        // for union
-        for(int i = 0 ; i < arr1.length; i++){
-            hs.add(arr1[i]);
-        }
-        for(int i = 0 ; i < arr2.length; i++){
-            hs.add(arr2[i]);
-        }
-        System.out.println("union sset size = "+ hs.size());
-        
-        // for intersection
-        hs.clear();
-
-        for(int i = 0 ; i < arr1.length; i++){
-            hs.add(arr1[i]);
+        for(String tkt :tickets.keySet()){
+            revMap.put(tickets.get(tkt), tkt);
         }
 
-        int count = 0;
-        for(int i = 0 ; i < arr2.length; i++){
-            if(hs.contains(arr2[i])){
-                count++;
-                hs.remove(arr2[i]);
+        for(String tkt :tickets.keySet()){
+            if(!revMap.containsKey(tkt)){
+                return tkt; // milgaya start pt
             }
         }
-        System.out.println("Intersection set size = "+count);
-        
+
+        return null;
+    }
+
+
+    public static void main(String args[]){
+        HashMap<String,String> tickets = new HashMap<>();
+        tickets.put("Chennai", "Bengalauru");
+        tickets.put("mumbai", "delhi");
+        tickets.put("goa", "Chennai");
+        tickets.put("delhi", "goa");
+
+        String start = getStartPt(tickets);
+        System.out.print(start);
+        for(String tkt : tickets.keySet()){
+            System.out.print(" -> " + tickets.get(start));
+            start = tickets.get(start);
+            
+        }
     }
 }
