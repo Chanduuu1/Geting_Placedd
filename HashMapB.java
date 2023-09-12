@@ -29,24 +29,24 @@ public class HashMapB{
     }
     
     
-    // largest subbaray with sum = 0 problem
+    // subbaray with sum = k problem
     public static void main(String args[]){ //O(n)
-        int[] arr = {15,-2,2,-8,1,7,10};
+        int[] arr = {10,2,-2,-20,10};
+        int k = -10;
         int sum = 0;
-        int len = 0;
+        int ansCount = 0;
 
         HashMap<Integer,Integer> map = new HashMap<>();
+        map.put(0,1);
+
         for(int j = 0; j < arr.length; j++){
             sum += arr[j];
-            if(map.containsKey(sum)){
-                int i = map.get(sum);
-                len = Math.max(len,j - i);
+            if(map.containsKey(sum-k)){
+                ansCount += map.get(sum-k);
             }
-            else{
-                map.put(sum,j);
-            }
+            map.put(sum, map.getOrDefault(sum,0)+1);
         }
-        System.out.println(len);
+        System.out.println(ansCount);
         
     }
 }
