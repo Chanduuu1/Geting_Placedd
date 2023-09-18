@@ -57,6 +57,21 @@ public class TriesB{
         return false;
     }
 
+        // Starts with problem
+    public static boolean startsWith(String prefix){
+        Node curr = root;
+
+        for(int i = 0; i < prefix.length(); i++){
+            int idx = prefix.charAt(i) - 'a';
+            if(curr.children[idx] == null){
+                return false;
+            }
+            curr = curr.children[idx];
+        }
+        return true;
+    }
+
+
     // for prefix Problem
 
     public static class Node2{
@@ -108,10 +123,14 @@ public class TriesB{
     public static void main(String[] args){
         String words[] = {"zebra", "dog", "duck", "dove"};
         for(int i = 0; i < words.length; i++){
-            insert2(words[i]);
+            insert(words[i]);
         }
-        root2.freq = -1;
-        findPrefix(root2, "");    
+        String prefix1 = "do";
+        String prefix2 = "ze";
+        String prefix3 = "da";
+        System.out.println(startsWith(prefix1));
+        System.out.println(startsWith(prefix2));
+        System.out.println(startsWith(prefix3));          
 
     }
 }
