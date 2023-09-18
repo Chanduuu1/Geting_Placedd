@@ -57,17 +57,57 @@ public class TriesB{
         return false;
     }
 
-    public static void main(String[] args){
-        String words[] = {"i","like","sam","samsung","mobile","ice"};
-        for(int i = 0; i < words.length; i++){
-            insert(words[i]);
+    // for prefix Problem
+
+    public static class Node2{
+        Node children[] = new Node[26];
+        boolean eow = false;
+        int freq;
+
+        public Node2(){
+            for(int i = 0; i < 26; i++){
+                children[i] = null;
+            }
+            freq = 1;
+        }
+    }
+    public static Node2 root2 = new Node2();
+
+    public static void insert2(String word){
+        Node2 curr = root2;
+        for(int lvl = 0; lvl < word.length(); lvl++){
+            int idx = word.charAt(lvl) - 'a';
+            if(curr.children[idx] == null){
+                curr.children[idx] = new Node2();
+            }
+            else{ // this is the new thing in town
+                curr.children[idx].freq++;
+            }
+            curr = curr.children[idx];
         }
 
-        String key = "ilikesamung";
-        System.out.println(wordBreak(key));
-        
+        curr.eow = true; // just following the tradition yaha koi use nahi hai eow ka iss sawal me
+    }
 
-        
-        
+    public static void findPrefix(Node2 root, String ans){
+        if(root2 == null){
+            return;
+        }
+        if(root2.freq == 1){
+            System.out.println(ans);
+            return;
+        }
+        for(int i = 0; i < root2.children.length /*=26 thoda style mar raha bass */; i++){
+            if(root2.children[i] != null){
+                findPrefix(root2.children[i], ans + (char)(i+'a')); // the 2nd argument i+a is converting the int value of idx to char and appendinding to ans
+            }
+        }
+    }
+
+
+    public static void main(String[] args){
+        String words[] = {"zebra", "dog", "duck", "dove"};
+        root2.freq = -1;    
+        findPrefix(root2,"");
     }
 }
