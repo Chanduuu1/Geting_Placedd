@@ -60,7 +60,7 @@ public class TriesB{
     // for prefix Problem
 
     public static class Node2{
-        Node children[] = new Node[26];
+        Node2 children[] = new Node2[26];
         boolean eow = false;
         int freq;
 
@@ -90,16 +90,16 @@ public class TriesB{
     }
 
     public static void findPrefix(Node2 root, String ans){
-        if(root2 == null){
+        if(root == null){
             return;
         }
-        if(root2.freq == 1){
+        if(root.freq == 1){
             System.out.println(ans);
             return;
         }
-        for(int i = 0; i < root2.children.length /*=26 thoda style mar raha bass */; i++){
-            if(root2.children[i] != null){
-                findPrefix(root2.children[i], ans + (char)(i+'a')); // the 2nd argument i+a is converting the int value of idx to char and appendinding to ans
+        for(int i = 0; i < root.children.length ; i++){  /*=26 thoda style mar raha bass */
+            if(root.children[i] != null){
+                findPrefix(root.children[i], ans + (char)(i+'a')); // the 2nd argument i+a is converting the int value of idx to char and appendinding to ans
             }
         }
     }
@@ -107,7 +107,12 @@ public class TriesB{
 
     public static void main(String[] args){
         String words[] = {"zebra", "dog", "duck", "dove"};
-        root2.freq = -1;    
-        findPrefix(root2,"");
+        for(int i = 0; i < words.length; i++){
+            insert2(words[i]);
+        }
+        root2.freq = -1;
+        findPrefix(root2, "");    
+
     }
 }
+
