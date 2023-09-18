@@ -121,7 +121,6 @@ public class TriesB{
 
 
     // for unique substr - count function
-
     public static int countNodes(Node root){
         if(root == null){
             return 0;
@@ -138,16 +137,38 @@ public class TriesB{
     }
 
 
-    public static void main(String[] args){
-        String str = "ababa";
-
-        // suffix then insert into trie
-        for(int i = 0; i < str.length(); i++){
-            String suffix = str.substring(i);
-            insert(suffix);
+    //longest word with all prefixes
+    public static String ans = "";  // final answer isme store hoga
+    public static void longestWord(Node root, StringBuilder temp){
+        if(root == null){
+            return;
         }
-        System.out.println(countNodes(root));
-        
+
+        for(int i = 0; i < 26; i++){
+            if(root.children[i] != null && root.children[i].eow == true){
+                char ch = (char)(i+'a');
+                temp.append(ch);
+                if(temp.length() > ans.length()){
+                    ans = temp.toString(); // because converting string builder to string ke liye.
+                }
+                longestWord(root.children[i], temp);
+
+                temp.deleteCharAt(temp.length() - 1);// backtrack responsibility
+            }
+        }
+    }
+
+
+
+    public static void main(String[] args){
+        String words[] = {"a","banana","app","appl","ap","apply", "apple"};
+
+        for(int i = 0; i < words.length; i++){
+            insert(words[i]);
+        }
+        longestWord(root, new StringBuilder(""));
+        System.out.println(ans);
+           
     }
 }
 
