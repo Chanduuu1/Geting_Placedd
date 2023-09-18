@@ -120,18 +120,34 @@ public class TriesB{
     }
 
 
-    public static void main(String[] args){
-        String words[] = {"zebra", "dog", "duck", "dove"};
-        for(int i = 0; i < words.length; i++){
-            insert(words[i]);
-        }
-        String prefix1 = "do";
-        String prefix2 = "ze";
-        String prefix3 = "da";
-        System.out.println(startsWith(prefix1));
-        System.out.println(startsWith(prefix2));
-        System.out.println(startsWith(prefix3));          
+    // for unique substr - count function
 
+    public static int countNodes(Node root){
+        if(root == null){
+            return 0;
+        }
+
+        int count = 0;
+        for(int i = 0; i < 26; i++){
+            if(root.children[i] != null){
+                count += countNodes(root.children[i]);
+            }
+        }
+
+        return count+1;
+    }
+
+
+    public static void main(String[] args){
+        String str = "ababa";
+
+        // suffix then insert into trie
+        for(int i = 0; i < str.length(); i++){
+            String suffix = str.substring(i);
+            insert(suffix);
+        }
+        System.out.println(countNodes(root));
+        
     }
 }
 
