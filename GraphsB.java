@@ -87,12 +87,35 @@ public class GraphsB{
         
     }
 
+
+
+    public static boolean hasPath(ArrayList<Edge>[] graph, int s, int d, boolean[] visited){
+        // if src = dest yeah buddy
+        if(s == d){
+            return true;
+        }
+
+        visited[s] = true;
+
+        // if not above, can my neigbour take me to the node?
+        for(int i = 0; i < graph[s].size(); i++){
+            Edge e = graph[s].get(i);
+            if(!visited[e.dest] && hasPath(graph, e.dest, d, visited)){
+                return true; // mtlb e.dest ke pass ek path hai, i trusted recurssion check bhi kr sakta hai ek baaar dw
+            }
+        }
+
+        return false;
+    }
+
+
     public static void main(String args[]){
         int V = 7;
         ArrayList<Edge>[] graph = new ArrayList[V]; // array of arraylist array ka naam graph hai and uske andar ds AL hai - dekha kya khel khela!?
         createGraph(graph);
         boolean[] visited = new boolean[V];
-        dfs(graph, 0, visited);
+        System.out.println(hasPath(graph, 0, 5,visited));
+        
 
     }
 }
