@@ -70,11 +70,29 @@ public class GraphsB{
         }
     }
 
+
+    public static void dfs(ArrayList<Edge>[] graph, int curr, boolean[] visited){
+        // source toh by default visited na
+        System.out.print(curr + " ");
+        visited[curr] = true;
+        // neighbour ke sath 
+        for(int i = 0; i < graph[curr].size(); i++){
+            Edge e = graph[curr].get(i);
+            if(!visited[e.dest]){
+                dfs(graph,e.dest,visited);
+            }
+        }
+        return;
+        
+        
+    }
+
     public static void main(String args[]){
         int V = 7;
         ArrayList<Edge>[] graph = new ArrayList[V]; // array of arraylist array ka naam graph hai and uske andar ds AL hai - dekha kya khel khela!?
         createGraph(graph);
-        bfs(graph);
+        boolean[] visited = new boolean[V];
+        dfs(graph, 0, visited);
 
     }
 }
