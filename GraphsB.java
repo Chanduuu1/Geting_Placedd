@@ -229,17 +229,79 @@ public class GraphsB{
     
 
 
+    // is bipartite
+    static void createGraph3(ArrayList<Edge> graph[]){
+        for(int i = 0; i < graph.length; i++){
+            graph[i] = new ArrayList<>();
+        }
+
+        graph[0].add(new Edge(0,1,1));
+        graph[0].add(new Edge(0,2,1));
+
+        graph[1].add(new Edge(1,0,1));
+        graph[1].add(new Edge(1,3,1));
+
+        graph[2].add(new Edge(2,0,1));
+        graph[2].add(new Edge(2,4,1));
+
+        graph[3].add(new Edge(3,1,1));
+        graph[3].add(new Edge(3,5,1));
+        
+        graph[4].add(new Edge(4,2,1));
+        graph[4].add(new Edge(4,5,1));
+
+        //graph[5].add(new Edge(5,3,1)); eben cycle karna hoto
+        //graph[5].add(new Edge(5,4,1));
+
+    }
+    public static boolean isBipartite(ArrayList<Edge>[] graph){
+        // yaha visited ke jaga pr color wala aar banage
+        int col[] = new int[graph.length];
+        for(int i = 0; i < col.length; i++){
+            col[i] = -1; // initializong no color
+        }
+
+        Queue<Integer> q = new LinkedList<>();
+
+        // checking for all components
+        for(int i = 0; i < graph.length; i++){
+            if(col[i] == -1){ // if node is not coloured yet
+                q.add(i);
+                col[i] = 0; // 0 => yellow
+                while(!q.isEmpty()){
+                    int curr = q.remove();
+                    for(int j = 0; j < graph[curr].size(); j++){
+                        Edge e = graph[curr].get(j);
+                        if(col[e.dest] == -1){ // color not assigned, then assign color different than its parent
+                            int nextCol = col[curr] == 0 ? 1 : 0; // bohot logical
+                            col[e.dest] = nextCol;
+                            q.add(e.dest);
+                        }
+                        else if(col[e.dest] == col[curr] ){// aiyyo, problem!
+                            return false;
+                        }
+                    }
+                    
+                }
+            }
+        }
+
+        return true; // thoda tricky tha but overall dekha jae toh medium difficulty is justified, aasan hi hai bass 2-3 baato ko dhyaan rakhna h
+    }
+
+
+
     public static void main(String args[]){
         /*
-                    0 -------- 3
-                   /|          |
-                  / |          |
-                 /  |          |
-                1   |          |
-                 \  |          |   
-                  \ |          |
-                   \|          |
-                    2          4
+                    0 ------- 2
+                   /          |
+                  /           |
+                 /            |
+                1             |
+                 \            |   
+                  \           |
+                   \          |
+                    3-------- 4
          
          
          */ 
@@ -247,10 +309,10 @@ public class GraphsB{
         
         
         
-        int V = 5;
+        int V = 6;
         ArrayList<Edge>[] graph = new ArrayList[V]; // array of arraylist array ka naam graph hai and uske andar ds AL hai - dekha kya khel khela!?
-        createGraph2(graph);
-        System.out.println(detectCycleUn(graph));
+        createGraph3(graph);
+        System.out.println(isBipartite(graph));
         
 
     }
