@@ -109,12 +109,74 @@ public class GraphsB{
     }
 
 
+
+    public static void bfsConnectedGraph(ArrayList<Edge>[] graph){
+        boolean vis[] = new boolean[graph.length];
+        for(int i = 0; i < graph.length; i++){
+            if(!vis[i]){
+                bfsUtil(graph, vis);
+            }
+        }
+    }
+    public static void bfsUtil(ArrayList<Edge>[] graph, boolean[] vis){
+        Queue<Integer> q = new LinkedList<>();
+        
+        // default adding source node
+        q.add(0);
+
+        // main funda
+        while(!q.isEmpty()){
+            // step1 usse q se nikalna
+            int curr = q.remove();
+
+            if(!vis[curr]){
+                // step 2 - abh kyuki wo visited nahi tha, toh hum usse print karwa denge and uska vis status T  kardenge
+                System.out.print(curr + " ");
+                vis[curr] = true;
+                //step 3 - curr ke saare neighbour ko add to q
+                for(int i = 0; i < graph[curr].size(); i++){ // dekh bhai aaray ke andar edge stored hai ye edge stored hone ka ds, AL hai. Confusion hai toh aaram se feel kar :)
+                    Edge e = graph[curr].get(i);
+                    q.add(e.dest);
+                }
+                               
+            }
+
+            // dont panic aaram se le
+        }
+    }
+
+    public static void dfsConnectedGraph(ArrayList<Edge>[] graph){
+        boolean vis[] = new boolean[graph.length];
+        for(int i = 0; i < graph.length; i++){
+            if(!vis[i]){
+                dfsUtil(graph,i, vis);
+            }
+        }
+    }
+    public static void dfsUtil(ArrayList<Edge>[] graph, int curr, boolean[] visited){
+        // source toh by default visited na
+        System.out.print(curr + " ");
+        visited[curr] = true;
+        // neighbour ke sath 
+        for(int i = 0; i < graph[curr].size(); i++){
+            Edge e = graph[curr].get(i);
+            if(!visited[e.dest]){
+                dfsUtil(graph,e.dest,visited);
+            }
+        }
+        return;
+        
+        
+    }
+
+
+
     public static void main(String args[]){
         int V = 7;
         ArrayList<Edge>[] graph = new ArrayList[V]; // array of arraylist array ka naam graph hai and uske andar ds AL hai - dekha kya khel khela!?
         createGraph(graph);
         boolean[] visited = new boolean[V];
-        System.out.println(hasPath(graph, 0, 5,visited));
+        System.out.println(hasPath(graph, 0, 7,visited));
         
 
     }
