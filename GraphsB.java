@@ -343,6 +343,51 @@ public class GraphsB{
     }
 
 
+
+    // topological sort
+    static void createGraph5(ArrayList<Edge> graph[]){
+        for(int i = 0; i < graph.length; i++){
+            graph[i] = new ArrayList<>();
+        }
+
+        graph[2].add(new Edge(2,3,1));
+        
+        graph[3].add(new Edge(3,1,1));
+
+        graph[4].add(new Edge(4,0,1));
+        graph[4].add(new Edge(4,1,1));
+
+        graph[5].add(new Edge(5,0,1));  
+        graph[5].add(new Edge(5,2,1));
+    
+    }
+
+    public static void topologicalSort(ArrayList<Edge> graph[]){
+        Stack<Integer> s = new Stack<>();
+        boolean vis[] = new boolean[graph.length];
+        for(int i = 0; i < graph.length; i++){
+            if(!vis[i]){
+                topologicalSortUtil(graph, s, vis, i);
+            }
+        }
+
+        for(int i = 0; i < graph.length; i++){
+            System.out.print(s.pop()+ " ");
+        }
+    }
+    public static void topologicalSortUtil(ArrayList<Edge> graph[], Stack<Integer> s, boolean vis[], int curr){
+        vis[curr] = true;
+        for(int i = 0; i < graph[curr].size(); i++){
+            Edge e = graph[curr].get(i);
+            if(!vis[e.dest]){ // if child not visited then add it to stack
+                topologicalSortUtil(graph,s,vis,e.dest);
+            }
+
+        }
+        s.add(curr);
+    }
+
+
     public static void main(String args[]){
         /*
                     0 ------ 3
@@ -361,10 +406,10 @@ public class GraphsB{
         
         
         
-        int V = 5;
+        int V = 6;
         ArrayList<Edge>[] graph = new ArrayList[V]; // array of arraylist array ka naam graph hai and uske andar ds AL hai - dekha kya khel khela!?
-        createGraph4(graph);
-        System.out.println(detectCycleDi(graph));
+        createGraph5(graph);
+        topologicalSort(graph);
         // aaram se shekhar dont worry! be a man, be strong!
 
     }
