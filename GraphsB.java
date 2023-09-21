@@ -291,17 +291,69 @@ public class GraphsB{
 
 
 
+    // cycle in directional graph
+    static void createGraph4(ArrayList<Edge> graph[]){
+        for(int i = 0; i < graph.length; i++){
+            graph[i] = new ArrayList<>();
+        }
+
+        graph[0].add(new Edge(0,2,1));
+        
+        graph[1].add(new Edge(1,0,1));
+
+        graph[2].add(new Edge(2,3,1));
+
+        graph[3].add(new Edge(3,4,1));
+
+        graph[4].add(new Edge(4,1,1));
+
+    
+    }
+    public static boolean detectCycleDi(ArrayList<Edge>[] graph){
+        boolean[] vis = new boolean[graph.length];
+        boolean[] tracked = new boolean[graph.length];
+
+        for(int i = 0; i < graph.length; i++){
+            if(!vis[i]){
+                if(detectCycleDiUtil(graph, tracked, i, vis)){ // yeh sab kaam karega
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+    public static boolean detectCycleDiUtil(ArrayList<Edge>[] graph, boolean[] tracked, int curr, boolean[] vis){
+        vis[curr] = true;
+        tracked[curr] = true;
+
+        for(int i = 0; i < graph[curr].size(); i++){
+            Edge e = graph[curr].get(i);
+            if(tracked[e.dest] == true){ // tracked aray me already mera dest hai mtlb cycle!!
+                return true;
+            }
+            if(!vis[e.dest]){ // agar dest abhi tak visit hi nahi hua hai toh visit krna
+                if(detectCycleDiUtil(graph, tracked, e.dest, vis)){ // aur dekh ki kya iske neighbour ka kya scene hai. tricky hai bt i think 2-3 mahine ragde ga toh hojaega
+                    return true;
+                }
+            }
+        }
+        tracked[curr] = false; // tracked se nikaal
+        return false;
+    }
+
+
     public static void main(String args[]){
         /*
-                    0 ------- 2
-                   /          |
-                  /           |
-                 /            |
-                1             |
-                 \            |   
-                  \           |
-                   \          |
-                    3-------- 4
+                    0 ------ 3
+                   / \       |
+                  /   \      |
+                 /     \     |
+                1       \    |
+                         \   |   
+                          \  |
+                           \ |
+                             2
          
          
          */ 
@@ -309,11 +361,11 @@ public class GraphsB{
         
         
         
-        int V = 6;
+        int V = 5;
         ArrayList<Edge>[] graph = new ArrayList[V]; // array of arraylist array ka naam graph hai and uske andar ds AL hai - dekha kya khel khela!?
-        createGraph3(graph);
-        System.out.println(isBipartite(graph));
-        
+        createGraph4(graph);
+        System.out.println(detectCycleDi(graph));
+        // aaram se shekhar dont worry! be a man, be strong!
 
     }
 }
