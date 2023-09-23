@@ -74,6 +74,105 @@ public class Graphs3B{
 
     }
 
+
+
+    /*//Connecting cities
+    static class Edge1 implements Comparable<Edge1> {
+        int src;
+        int dest;
+        int wt;
+        public Edge(int s, int d, int w){
+            this.src = s;
+            this.dest = d;
+            this.wt = w;
+        }
+
+        @Override
+        public int compareTo(Edge1 e2){
+            return this.wt - e2.wt; // because pq me edg1 store karne wale hai
+        }
+    }
+    public static void createGraphForCities(int[][] cities, ArrayList<Edge1>[] graph){
+        for(int i = 0; i < graph.length; i++){
+            graph[i] = new ArrayList<>();
+        }
+        for(int i = 0; i < graph.length; i++){
+            for(int j = 0; j < graph[i].length; i++){
+                graph[i].add(new Edge(i,j,cities[i][j]));
+            }
+            
+        }
+
+    }
+    public static int connectingCities(int[][] cities){
+        // number of graph nodes = cities ka length
+        ArrayList<Edge1>[] graph = new ArrayList[cities.length];
+        createGraphForCities(cities, graph);
+
+        // start prim
+        PriorityQueue<Edge1> pq = new PriorityQueue<>();
+        boolean vis[] = new boolean[cities.length];
+        int finalCost = 0;
+        pq.add(new Edge1(0,0,0));
+
+        while(!pq.isEmpty()){
+            Edge1 curr = pq.remove();
+            if(!vis[curr.dest]){
+                vis[curr.dest] = true;
+                finalCost += curr.wt;
+                for(int i = 0; i < graph[curr.src].size();i++){
+                    Edge1 e = graph[curr.src].get(i);
+                    pq.add(new Edge1(src,))
+                }
+                    
+            }
+            
+
+        }
+    }
+    */ // finish this by implementing graph first filal me shradha di method
+
+    // connecting cities
+    static class Edge1 implements Comparable<Edge1>{
+        int dest;
+        int cost;
+        public Edge1(int d, int c){
+            this.dest = d;
+            this.cost = c;
+        }
+
+        @Override
+        public int compareTo(Edge1 e2){
+            return this.cost - e2.cost;
+        }
+    }
+    public static int connectingCities(int[][] cities){
+        // start prim
+        PriorityQueue<Edge1> pq = new PriorityQueue<>();
+        boolean vis[] = new boolean[cities.length];
+        
+        pq.add(new Edge1(0,0));
+        int finalCost = 0;
+
+        while(!pq.isEmpty()){
+            Edge1 curr = pq.remove();
+            if(!vis[curr.dest]){
+                vis[curr.dest] = true;
+                finalCost += curr.cost;
+
+                for(int i = 0; i < cities[curr.dest].length; i++){
+                    if(cities[curr.dest][i] != 0){
+                        pq.add(new Edge1(i, cities[curr.dest][i]));
+                    }
+                }
+            }
+        }
+
+        return finalCost;
+
+    }
+
+
     public static void main(String args[]){
         int flights[][] = {{0,1,100}, {1,2,100}, {2,0,100}, {1,3,600}, {2,3,200}};
         int n = 4, src = 0, dst = 3, k = 1;
