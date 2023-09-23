@@ -185,6 +185,66 @@ public class Graphs2B{
          }
     }
 
+    // dijksrta practice - khud se // o(v + elogn) this is because finding min dist Pq me is(o)1
+    static class AnInfo implements Comparable<AnInfo> {
+        int vertex;
+        int distToVertex;
+        public  AnInfo(int v, int c){
+            this.vertex = v;
+            this.distToVertex = c;
+        }
+
+        @Override
+        public int compareTo(AnInfo p2){
+            return this.distToVertex - p2.distToVertex;
+        }
+    }
+    public static void dijksrta(ArrayList<Edge> graph[], int src){
+        int dist[] = new int[graph.length];
+        for(int i = 0; i < graph.length; i++){
+            if(i != src){
+                dist[i] = Integer.MAX_VALUE;
+            }
+        }
+
+        PriorityQueue<AnInfo> pq = new PriorityQueue<>();
+        pq.add(new AnInfo(src,0));
+        while(!pq.isEmpty()){
+            AnInfo curr = pq.remove();
+            for(int i = 0; i < graph[curr.vertex].size(); i++){
+                Edge e = graph[curr.vertex].get(i);
+                int u = e.src;
+                int v = e.dest;
+                int wt = e.wt;
+
+                // relaxation step
+                if(dist[u] + wt < dist[v]){ // if this condition is not met no need to do anything
+                    dist[v] = dist[u] + wt;
+                    pq.add(new AnInfo(v,dist[v])); // v tak jana ke abh tak ka shortest dist
+                }
+
+            }
+        }
+        for(int i = 0; i < dist.length; i++){
+            System.out.print(dist[i]);
+            
+        }
+    }
+
+    //dij using array #khud se pq nahi toh queue toh use krna hi padega so cmplt it  later.
+    public static void dijksrtaArr(ArrayList<Edge> graph[], int src){
+        int dist[] = new int[graph.length];
+        for(int i = 0; i < graph.length; i++){
+            if(i != src){
+                dist[i] = Integer.MAX_VALUE;
+            }
+        }
+
+        Queue<AnInfo>
+        
+
+    }
+
 
 
     //bellman ford
@@ -301,11 +361,11 @@ public class Graphs2B{
         
     }
 
-
+    
     public static void main(String args[]){
-        int V = 4;
+        int V = 6;
         ArrayList<Edge>[] graph = new ArrayList[V]; 
-        createGraph9(graph);
-        prims(graph);
+        createGraph7(graph);
+        dijksrta(graph,0);
     }
 }
