@@ -174,14 +174,13 @@ public class Graphs3B{
 
 
     // disjoint set ds
-    static int n = 7;
+    static int n = 4;
     static int par[] = new int[n];
     static int rank[] = new int[n];
 
     public static void init(){ //initalizing par and rank
         for(int i = 0; i < n; i++){
             par[i] = i;
-            rank[i] = 0;
         }
     }
 
@@ -190,7 +189,7 @@ public class Graphs3B{
             return x;
         }
 
-        return find(par[x]);
+        return par[x] = find(par[x]);
     }
 
     public static void union(int a, int b){
@@ -208,17 +207,60 @@ public class Graphs3B{
         }
     }
 
+    //kruskal with help of disjoint set for cycle detection
+    static class Edge2 implements Comparable<Edge2>{
+        int src;
+        int dest;
+        int wt;
+        public Edge2(int s, int d, int w){
+            this.src = s;
+            this.dest = d;
+            this.wt = w;
+        }
+
+        @Override
+        public int compareTo(Edge2 e2){
+            return this.wt - e2.wt;
+        }
+    }
+    public static void createGraph1(ArrayList<Edge2> edges){ // an edge list representation of graph
+        // same graph as in prims
+        edges.add(new Edge2(0,1,10));
+        edges.add(new Edge2(0,2,15));
+        edges.add(new Edge2(0,3,30));
+        edges.add(new Edge2(1,3,40));
+        edges.add(new Edge2(2,3,50));
+    }
+    // all disjoint set logic will come here, but already written soo...  just change number of node to 4 from 8;
+
+
+    public static void kruskalsMST(ArrayList<Edge2> edges, int V){
+        init();
+        Collections.sort(edges);
+        int ans = 0; // stores final mst cost
+        int count = 0; // stores how many edges are included in mst till now, this should be equal to the min value of edges that is V-1
+
+        for(int i = 0; i < edges.size(); i++){
+            Edge2 e = edges.get(i);
+            
+            // cycle condition aboid
+            int parA = find(e.src);
+            int parB = find(e.dest);
+            if(parA != parB){ // nice, cycle form nai hogi
+                union(e.src, e.dest);
+                ans += e.wt;
+            } 
+        }
+        System.out.println(ans);
+        
+    }
+
 
     public static void main(String args[]){
-        init();
-        union(1,3);
-        System.out.println(find(3));
-        union(2,4);
-        union(3,6);
-        union(1,4);
-        System.out.println(find(3));
-        System.out.println(find(4));
-        union(1,5);
+        int V = 4;
+        ArrayList<Edge2> edges = new ArrayList<>();
+        createGraph1(edges);
+        kruskalsMST(edges,V);
     }
 
 }
