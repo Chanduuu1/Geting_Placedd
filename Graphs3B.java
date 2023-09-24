@@ -240,7 +240,7 @@ public class Graphs3B{
         int ans = 0; // stores final mst cost
         int count = 0; // stores how many edges are included in mst till now, this should be equal to the min value of edges that is V-1
 
-        for(int i = 0; i < edges.size(); i++){
+        for(int i = 0; i < edges.size(); i++){ // count < V-1 kyu fail hua dekh
             Edge2 e = edges.get(i);
             
             // cycle condition aboid
@@ -255,6 +255,32 @@ public class Graphs3B{
         
     }
 
+
+
+    // flood fill algo 733 leetcode submit there
+    public void helper(int[][] image, int sr, int sc, int color,boolean[][] vis, int orgColor){
+        if( sr < 0 || sc < 0 || sr>=image.length || sc >=image[0].length || vis[sr][sc] || image[sr][sc] != orgColor){
+            return;
+        }
+
+        image[sr][sc] = color;
+
+        // left
+        helper(image,sr,sc-1,color, vis, orgColor);
+        // right
+        helper(image,sr,sc+1,color, vis, orgColor);
+        // up
+        helper(image,sr-1,sc,color, vis, orgColor);
+        // down
+        helper(image,sr+1,sc,color, vis, orgColor);
+    }
+
+
+    public int[][] floodFill(int[][] image, int sr, int sc, int color){
+        boolean vis[][] = new boolean[image.length][image[0].length];
+        helper(image,sr,sc,color,vis,image[sr][sc]);
+        return image;
+    }
 
     public static void main(String args[]){
         int V = 4;
