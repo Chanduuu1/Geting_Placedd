@@ -25,10 +25,23 @@ public class DP{
         return ways[n];
     }
 
+
+    public static int countWaysTabluation(int n, int ways[]){
+        // intialization
+        ways[0] = 1; // ground floor pr hi rehne ke 1 tareke hai wahi raho
+        ways[1] = 1;
+        for(int  i = 2; i <= n; i++){
+            ways[i] = ways[i-1] + ways[i-2];
+        }
+
+        return ways[n];
+    }
+
     public static void main(String args[]){
-        int n=5;
+        int n=6;
         int ways[] = new int[n+1];
-        System.out.println(countWaysMemoized(n,ways) + " ways");
+        
+        System.out.println(countWaysTabluation(n,ways) + " ways");  // lett uss wenttt!
         
     }
 }
