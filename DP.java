@@ -164,7 +164,18 @@ public class DP{
 
             }
         }
+
+        printDP2(dp);
         return dp[n][sum];
+    }
+    public static void printDP2(boolean dp[][]){
+        for(int i = 0; i < dp.length; i++){
+            for(int j = 0; j < dp[0].length; j++){
+                System.out.print(dp[i][j]+ " ");
+            }
+            System.out.println();
+            
+        }
     }
 
     public static void main(String args[]){
