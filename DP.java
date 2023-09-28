@@ -62,7 +62,6 @@ public class DP{
             return knapsack(val, wt, W, n-1); //kuch nahi aage badho esa
         }       
     }
-
     public static int knapsackMemoization(int val[], int wt[], int W, int n, int dp[][]){ // O(n * W)
         // base case
         if(W == 0 || n == 0){
@@ -87,6 +86,58 @@ public class DP{
             return dp[n][W];
         }       
     }
+    public static int knapsackTabulation(int val[], int wt[], int W){
+        int n = val.length;
+        int dp[][] = new int[n+1][W+1];
+
+        //step1 initialization
+        for(int i = 0; i < dp.length; i++){
+            dp[i][0] = 0;
+        }
+        for(int j = 0; j < dp[0].length; j++){
+            dp[0][j] = 0;
+        }
+
+        // tabulating
+        for(int i = 1; i < n+1; i++){
+            for(int j = 1; j < W+1; j++){
+                // find value and wieght 
+                int v = val[i-1]; // value of ith element
+                int w = wt[i-1]; // wt of " " " "
+                if(w <= j){  //valid
+                
+                // apna toh include hi karlo + aage dekh i-1 elemets ko j-w capacity se max profit kese nikale? uske liye uska table pr search kr details and buid
+                int incldProfit = v + dp[i-1][j-w];
+                // me excld kar kr baaki possibilites explore kr raha
+                int excldProfit = dp[i-1][j];
+
+
+                //anth me jo zyada profitable!
+                dp[i][j] = Math.max(incldProfit,excldProfit);
+                }
+
+                else{
+                    int excldProfit = dp[i-1][j];
+                    dp[i][j] = excldProfit;
+                }
+            }
+        }
+
+
+        // just for clarity dp matrix ko dekhle 
+        printDP(dp);
+
+        return dp[n][W]; // as expected, ans ekdum nichle right corner me hoga
+    }
+    public static void printDP(int dp[][]){
+        for(int i = 0; i < dp.length; i++){
+            for(int j = 0; j < dp[0].length; j++){
+                System.out.print(dp[i][j]+ " ");
+            }
+            System.out.println();
+            
+        }
+    }
     
 
     public static void main(String args[]){
@@ -100,7 +151,7 @@ public class DP{
                 dp[i][j] = -1;
             }
         }
-        System.out.println(knapsackMemoization(val,wt,W,val.length, dp));
+        System.out.println(knapsackTabulation(val,wt,W));
         
     }
 }
