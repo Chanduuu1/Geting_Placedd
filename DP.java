@@ -428,6 +428,9 @@ public class DP{
     }
 
 
+    // string converson using lcs logic
+    // string conversion using edit distance logic
+    // do both hw diya hai di ne
 
     public static void main(String args[]){
         String word1 = "intention";
