@@ -235,12 +235,28 @@ public class DP{
     }
 
 
-    public static void main(String args[]){
-        int rodLength = 8;
-        int lengthOfRod[] = {1,2,3,4,5,6,7,8}; // 
-        int price[] = {1,5,8,9,10,17,17,20};
+    //lcs
+    public static int lcs(String str1,  int n, String str2, int m){
+        if(n == 0 || m == 0){
+            return 0;
+        }
 
-        System.out.println(rodCutting(lengthOfRod,price,rodLength));
+        if(str1.charAt(n-1) == str2.charAt(m-1)){
+            return lcs(str1,n-1,str2,m-1) + 1; // same wali case
+        }
+        else{
+            int ans1 = lcs(str1, n-1, str2,m);
+            int ans2 = lcs(str1, n, str2,m-1);
+            return Math.max(ans1,ans2);
+        }
+    }
+
+
+    public static void main(String args[]){
+        String str1 = "abcdge";
+        String str2 = "abedg";
+        System.out.println(lcs(str1, str1.length(), str2, str2.length()));
+        
         
     }
 }
