@@ -561,10 +561,29 @@ public class DP{
 
 
 
+    //mcm rec
+    public static int mcm(int[] arr, int i, int j){
+        if(i == j){
+            return 0;
+        }
+
+        int finalAns = Integer.MAX_VALUE;
+        for(int k = i; k <= j-1; k++){
+            int cost1 = mcm(arr, i, k); // Ai...Ak => arr[i-1] x arr[k]
+            int cost2 = mcm(arr, k+1, j);  // Ai+1...Ak => arr[k] x arr[j]
+            int cost3 = arr[i-1] * arr[k] * arr[j];
+            int totalCost = cost1 + cost2 + cost3;
+            finalAns = Math.min(finalAns, totalCost);
+        }
+
+    return finalAns;
+    }
+
 
     public static void main(String args[]){
-        int n = 4;
-        System.out.println(mountainRanges(n));
+        int[] arr = {1,2,3,4,3};
+        int n = arr.length;
+        System.out.println(mcm(arr,1,n-1));
         
         
 
