@@ -576,14 +576,39 @@ public class DP{
             finalAns = Math.min(finalAns, totalCost);
         }
 
-    return finalAns;
+        return finalAns;
+    }
+    //mcm mem
+    public static int mcmMem(int[][] dp, int[] arr, int i, int j){
+        if(i == j){
+            return 0;
+        }
+
+        if(dp[i][j] != -1){
+            return dp[i][j];
+        }
+        int finalAns = Integer.MAX_VALUE;
+        for(int k = i; k <= j-1; k++){
+            int cost1 = mcmMem(dp,arr, i, k); // Ai...Ak => arr[i-1] x arr[k]
+            int cost2 = mcmMem(dp,arr, k+1, j);  // Ai+1...Ak => arr[k] x arr[j]
+            int cost3 = arr[i-1] * arr[k] * arr[j];
+            int totalCost = cost1 + cost2 + cost3;
+            finalAns = Math.min(finalAns, totalCost);
+        }
+        dp[i][j] = finalAns;
+        return dp[i][j];
     }
 
 
     public static void main(String args[]){
         int[] arr = {1,2,3,4,3};
         int n = arr.length;
-        System.out.println(mcm(arr,1,n-1));
+
+        int dp[][] = new int[n][n];
+        for(int i = 0; i < n; i++){
+            Arrays.fill(dp[i], -1);
+        }
+        System.out.println(mcmMem(dp,arr,1,n-1));
         
         
 
