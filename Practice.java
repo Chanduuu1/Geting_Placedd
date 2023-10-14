@@ -260,53 +260,181 @@ public class Practice{
             return a+1;
         } 
     }
-    public static int occur(int[] arr, int key, int si, int ei){
-        if(si == ei){
-            System.out.println(arr[si]);
-            return -1;
-            
-        }
-        int mid = si + ([ei]/2 - [si]/2);
-        if(arr[mid] > key){
-            occur(arr,key,si,mid-1);
-        }
-        else if (arr[mid] < key){
-            occur(arr,key,mid+1,ei);
-        }
-        else{
-            System.out.println(arr[mid]);
-            
-        }
 
-        return -1;
+    static int maxIdx = 0;
+    public static int lastOcc(int arr[], int i, int k){
+        if(i == arr.length){
+            return -1;
+        }
+        if(arr[i] == k){
+           maxIdx = i;
+        }
+        
+        return lastOcc(arr,i+1,k);
+
 
     }
-    public static void main(String args[]){
-        /*
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int arr[] = new int[N];
-        for(int i = 0; i < N; i++){
-            arr[i] = sc.nextInt();
-        }
-        BinSearchRec(arr, 34, 0, N-1);
-        int arr[] = {4,2,0,6,3,2,5,7};
-        trappingRain(arr);
-        int[][] mat = {{10,20,30,40},{15,25,35,45},{27,29,27,48},{32,33,39,50}};
-        printArr2D(mat);
-        stairCaseSearch(mat,36);
-       strCompress("aaabbcccddefffffgh");
-       
-        int arr[] = {0,0,1,1,1,2,2,3,3,4};
-        System.out.println(removeDuplicates(arr));
-        printArr(arr);
-        */
-        int[] arr = {3, 2, 4, 5, 6, 2, 7, 2, 2};
-        Arrays.sort(arr);
-        printArr(arr);
-        System.out.println(occur(arr,2,0,8));
-        
-       
 
+    public static int powOf(int x, int n){
+        if(n == 0){
+            return 1;
+        }
+        int hp = powOf(x, n/2);
+
+        if(n%2 == 0){
+            return hp*hp;
+        }
+        else{
+            return hp*hp*x;
+        }
+
+
+    }
+
+    static int count = 1,count1 = 1;
+    public static int tp(int n){
+        if(n == 0 || n == 1){
+            return 1;
+        }
+        int v = tp(n-1);
+        int h = tp(n-2);
+        System.out.println(v);
+        System.out.println(h);
+        System.out.println(v+h);
+        return v+h;
+    }
+
+    public static double myPow(double x, int n) {
+        if(n < 0){
+            n = Math.abs(n);
+            return myPow(1/x, n);
+        }
+        if(n == 0){
+            return 1;
+        }
+        double hp = myPow(x,n/2);
+        if(n%2 == 0){
+            return hp*hp;
+        }
+        else{
+            return hp*hp*x;
+        }
+    }
+
+
+    public static void generateBinaryStrings(int n, String str, int lastplace) {
+        if(n == 0){
+            System.out.println(str);
+            return;
+        }
+        
+        if(lastplace == 0){
+            generateBinaryStrings(n - 1, str+"0", 0);
+            generateBinaryStrings(n - 1, str+"1", 1);
+        }
+        else{
+            generateBinaryStrings(n-1, str+"0", 0);
+        }  
+    }
+
+
+
+
+    public static void mS(int[] arr, int si, int ei){
+        int mid = (si+ei)/2;
+        mSHelper(arr,si,mid,ei);
+    }
+    public static void mSHelper(int arr[], int si, int mid, int ei){
+        int i = si;
+        int j = mid+1;
+        int k = 0;
+        int[] temp = new int[ei-si+1];
+        while(i <= mid && j <= ei){
+            if(arr[i] < arr[j]){
+                temp[k] = arr[i];
+                i++;
+            }
+            else{
+                temp[k] = arr[j];
+                j++;
+            }
+            k++;
+        }
+
+        printArr(temp);
+    }
+
+
+    public static void compress(char[] chars) {
+        // brute force
+        String s = "";
+        int count = 1;
+        int jump = 0;
+        for(int i = 0; i < chars.length; i+= jump){
+            char curr = chars[i];
+            s += curr;
+            for(int j = i+1; j < chars.length; j++){
+                if(chars[j] != curr){
+                    s += count;
+                    jump = count;
+                    count = 1;
+                    break;
+                }
+                else{
+                    count++;
+                }
+            }
+            i = i + jump;
+            jump = 0;
+        }
+        System.out.println(s);
+        
+        
+        /*String str = "";
+        int i = 0;
+        int j = 1;
+        int count = 1;
+        while(i < chars.length && j < chars.length){
+            if(chars[i] == chars[j]){
+                count++;
+                j++;
+            }
+            else{
+                str += chars[i];
+                if(count != 1){
+                    str += count;
+                }
+                count = 1;
+                i = j;
+                j++;
+            }
+        }
+        str += chars[i];
+        if(count != 1){
+            str += count;
+        }
+        System.out.println(str);*/
+        
+    }
+
+    
+    public static void findSubsets(String str, String ans, int i){
+        if(i == str.length()){
+            System.out.println(ans);
+            return;
+        }
+
+        findSubsets(str, ans + str.charAt(i), i+1);
+        findSubsets(str, ans, i+1);
+
+    }
+
+
+
+    public static void main(String args[]){
+        String str = "abc";
+        String ans = "";
+        findSubsets(str,ans,0);
+        
     }
 }
